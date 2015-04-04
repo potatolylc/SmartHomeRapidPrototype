@@ -69,5 +69,14 @@
 		liaochen1humidity2: <input type="text" name="liaochen1humidity2">
 		<input type="submit" value="sensor data collection - all">
 	</form>
+	<br><br>
+	<h2>location</h2>
+	<form action="location/push" method="post">
+		userName: <input type="text" name="userName"><br>
+		userWifiSsid: <input type="text" name="userWifiSsid"><br>
+		longitude: <input type="text" name="longitude">
+		latitude: <input type="text" name="latitude">
+		<input type="submit" value="sensor data collection - all">
+	</form>
 </body>
 </html>
