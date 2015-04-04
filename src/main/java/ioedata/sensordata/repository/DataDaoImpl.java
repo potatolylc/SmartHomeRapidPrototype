@@ -1,7 +1,7 @@
 package ioedata.sensordata.repository;
 
 import ioedata.sensor.model.SensorValue;
-import ioedata.sensordata.model.DataValue;
+import ioedata.sensordata.model.SensorDataValue;
 
 import java.util.List;
 
@@ -20,37 +20,37 @@ import org.springframework.stereotype.Repository;
 public class DataDaoImpl implements DataDao {
 	@Resource(name = "sqlSessionTemplate")
 	private SqlSessionTemplate template;
+
+	@Override
+	public int insertSensorData(SensorDataValue dataVal) {
+		return this.template.insert("sensordata.insertSensorData", dataVal);
+	}
 	
 	@Override
-	public DataValue getLastDataByDeviceIdSortedByTimestamp(String deviceId) throws Exception {
+	public SensorDataValue getLastDataByDeviceIdSortedByTimestamp(String deviceId) throws Exception {
 		return this.template.selectOne("data.getLastDataByDeviceIdSortedByTimestamp", deviceId);
 	}
 
 	@Override
-	public DataValue getLastDataByDeviceIdAndSensorTypeSortedByTimestamp(
+	public SensorDataValue getLastDataByDeviceIdAndSensorTypeSortedByTimestamp(
 			SensorValue sensorVal) throws Exception {
 		return this.template.selectOne("data.getLastDataByDeviceIdAndSensorTypeSortedByTimestamp", sensorVal);
 	}
 
 	@Override
-	public int insertSensorData(DataValue dataVal) throws Exception {
-		return this.template.insert("data.insertSensorData", dataVal);
-	}
-
-	@Override
-	public List<DataValue> getDataListByDeviceIdAndSensorTypeAndDateSortedByTimestamp(
-			DataValue dataVal) throws Exception {
+	public List<SensorDataValue> getDataListByDeviceIdAndSensorTypeAndDateSortedByTimestamp(
+			SensorDataValue dataVal) throws Exception {
 		return this.template.selectList("data.getDataListByDeviceIdAndSensorTypeAndDateSortedByTimestamp", dataVal);
 	}
 
 	@Override
-	public DataValue getGreatestDataByDeviceIdAndSensorType(
+	public SensorDataValue getGreatestDataByDeviceIdAndSensorType(
 			SensorValue sensorVal) throws Exception {
 		return this.template.selectOne("data.getGreatestDataByDeviceIdAndSensorType", sensorVal);
 	}
 
 	@Override
-	public DataValue getLeastDataByDeviceIdAndSensorType(SensorValue sensorVal)
+	public SensorDataValue getLeastDataByDeviceIdAndSensorType(SensorValue sensorVal)
 			throws Exception {
 		return this.template.selectOne("data.getLeastDataByDeviceIdAndSensorType", sensorVal);
 	}

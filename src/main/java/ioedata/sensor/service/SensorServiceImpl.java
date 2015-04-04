@@ -1,9 +1,11 @@
 package ioedata.sensor.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.annotation.Resource;
 
+import ioedata.device.model.DeviceValue;
 import ioedata.device.service.DeviceService;
 import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.SensorDuplicateException;
@@ -68,8 +70,12 @@ public class SensorServiceImpl implements SensorService {
 				.getSensorTypeNum(sensorType));
 		sensorVal.setSensorTimestamp(new Date());
 		this.sensorRepository.insertObject(sensorVal);
-		return this.retrieveSensorSerialNumBySensorNameAndDeviceSerialNum(
+		ObjectId sensorSerialNum = this.retrieveSensorSerialNumBySensorNameAndDeviceSerialNum(
 				sensorName, deviceSerialNum);
+		ArrayList<SensorValue> sensors = new ArrayList<SensorValue>();
+		sensors.add(sensorVal);
+		this.deviceService.updateDeviceInfo(new DeviceValue(deviceSerialNum, sensors));
+		return sensorSerialNum;
 	}
 
 	@Override

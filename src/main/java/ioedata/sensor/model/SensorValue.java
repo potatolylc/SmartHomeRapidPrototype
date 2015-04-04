@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class SensorValue {
 	@Id
 	private ObjectId sensorSerialNum;
+	private String sensorSerialNumStr;
 	private String sensorName;
 	private ObjectId deviceSerialNum;
 	private int sensorTypeNum;
@@ -23,6 +24,11 @@ public class SensorValue {
 	
 	public SensorValue() {
 		super();
+	}
+
+	public SensorValue(String sensorSerialNumStr) {
+		super();
+		this.sensorSerialNumStr = sensorSerialNumStr;
 	}
 
 	public SensorValue(ObjectId sensorSerialNum, String sensorName,
@@ -41,6 +47,14 @@ public class SensorValue {
 
 	public void setSensorSerialNum(ObjectId sensorSerialNum) {
 		this.sensorSerialNum = sensorSerialNum;
+	}
+
+	public String getSensorSerialNumStr() {
+		return sensorSerialNumStr;
+	}
+
+	public void setSensorSerialNumStr(String sensorSerialNumStr) {
+		this.sensorSerialNumStr = sensorSerialNumStr;
 	}
 
 	public String getSensorName() {

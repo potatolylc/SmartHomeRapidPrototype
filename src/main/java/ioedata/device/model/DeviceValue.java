@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -24,9 +23,9 @@ public class DeviceValue {
 	private String deviceName;
 	private int userSerialNum;
 	private Date deviceTimestamp;
-	@DBRef
+	//@DBRef
 	private List<SensorValue> sensors;
-	@DBRef
+	//@DBRef
 	private List<ActuatorValue> actuators;
 	
 	public DeviceValue() {
@@ -37,6 +36,12 @@ public class DeviceValue {
 		super();
 		this.deviceName = deviceName;
 		this.userSerialNum = userSerialNum;
+	}
+
+	public DeviceValue(ObjectId deviceSerialNum, List<SensorValue> sensors) {
+		super();
+		this.deviceSerialNum = deviceSerialNum;
+		this.sensors = sensors;
 	}
 
 	public DeviceValue(ObjectId deviceSerialNum, String deviceName,

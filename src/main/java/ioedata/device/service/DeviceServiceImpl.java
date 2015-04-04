@@ -120,4 +120,9 @@ public class DeviceServiceImpl implements DeviceService {
 		return this.deviceRepository.isObjectExist(userSerialNum, deviceName);
 	}
 
+	@Override
+	public void updateDeviceInfo(DeviceValue deviceValue) {
+		this.deviceRepository.updateObject(deviceValue);
+	}
+
 }

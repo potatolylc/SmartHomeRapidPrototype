@@ -53,5 +53,21 @@
 		sensorName: <input type="text" name="sensorName"><br>
 		<input type="submit" value="sensor registration">
 	</form>
+	<br><br>
+	<h2>sensor data collection</h2>
+	<form action="sensorData/collect" method="post">
+		deviceSerialNum: <input type="text" name="deviceSerialNum"><br>
+		sensorName: <input type="text" name="sensorName"><br>
+		sensorDataValue: <input type="text" name="sensorDataValue"><br>
+		<input type="submit" value="sensor data collection">
+	</form>
+	<br><br>
+	<h2>sensor data collection - all</h2>
+	<form action="sensorData/collectAll" method="post">
+		deviceSerialNum: <input type="text" name="deviceSerialNum"><br>
+		sensorName1: <input type="text" name="temp">
+		sensorName2: <input type="text" name="humidity">
+		<input type="submit" value="sensor data collection - all">
+	</form>
 </body>
 </html>

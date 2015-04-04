@@ -157,6 +157,7 @@ public class DeviceController {
 			return new JSONObject().put("result", flag).toString();
 		}
 		return new JSONObject()
+				.put("result", flag)
 				.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
 				.put("userSerialNum", deviceValRet.getUserSerialNum())
 				.put("deviceName", deviceValRet.getDeviceName())

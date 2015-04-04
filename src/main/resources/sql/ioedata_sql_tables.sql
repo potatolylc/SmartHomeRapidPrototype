@@ -44,9 +44,10 @@ create table IOESENSORDATA (
 	sensor_data_serial_num number primary key,
 	sensor_data_value number not null,
 	sensor_data_timestamp date not null,
-	sensor_serial_num number not null
+	sensor_serial_num varchar2(100) not null
 );
 
+select to_char(sensor_data_timestamp, 'yyyy/mm/dd HH24:MI:SS') from IOESENSORDATA;
 drop table IOESENSORDATA;
 
 -- SEQUENCE sensor data

@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.WriteResult;
@@ -37,8 +38,12 @@ public class DeviceRepositoryImpl implements DeviceRepository<DeviceValue, Objec
 
 	@Override
 	public WriteResult updateObject(DeviceValue deviceVal) {
-		// TODO Auto-generated method stub
-		return null;
+		Update update = new Update();
+		update.addToSet("sensors", deviceVal.getSensors().get(0));
+		return this.template.upsert(
+				new Query(
+						Criteria.where("_id").is(deviceVal.getDeviceSerialNum())), update, DeviceValue.class);
+						
 	}
 
 	@Override

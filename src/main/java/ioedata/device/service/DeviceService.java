@@ -53,4 +53,9 @@ public interface DeviceService {
 	 */
 	public boolean isDeviceExist(int userSerialNum, String deviceName);
 	
+	/*
+	 * Upsert device information
+	 */
+	public void updateDeviceInfo(DeviceValue deviceValue);
+	
 }
