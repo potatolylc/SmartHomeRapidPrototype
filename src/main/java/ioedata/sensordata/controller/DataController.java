@@ -1,13 +1,18 @@
 package ioedata.sensordata.controller;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
+import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.SensorNotExistException;
 import ioedata.sensordata.service.DataService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.bson.types.ObjectId;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -47,6 +52,9 @@ public class DataController {
 		} catch (SensorNotExistException e) {
 			msg = "Sensor does not exist.";
 			e.printStackTrace();
+		} catch (DeviceNotExistException e) {
+			msg = "Device does not exist.";
+			e.printStackTrace();
 		}
 		System.out.println("collectData: " + msg);
 		return new JSONObject().put("result", flag).put("message", msg).toString();
@@ -55,13 +63,27 @@ public class DataController {
 	@RequestMapping(value = "/collectAll", method = RequestMethod.POST)
 	@ResponseBody
 	public String collectData(HttpServletRequest request, 
-			@RequestParam("deviceSerialNum") String deviceSerialNum) throws JSONException {
+			@RequestParam("deviceSerialNum") ObjectId deviceSerialNum) throws JSONException {
 		System.out.println("collectData all: " + deviceSerialNum);
 		boolean flag = false;
 		String msg = null;
-		Enumeration<String> enu = request.getParameterNames();
-		while (enu.hasMoreElements()) {
-			System.out.println(enu.nextElement());
+		Map<String , Object> sensorDataPairs = new HashMap<String, Object>();
+		Enumeration<String> requestParams = request.getParameterNames();
+		while(requestParams.hasMoreElements()) {
+			String requestParam = requestParams.nextElement();
+			if(requestParam.equals("deviceSerialNum"))
+				continue;
+			String paramVal = request.getParameter(requestParam);
+			sensorDataPairs.put(requestParam, paramVal);
+		}
+		try {
+			this.dataService.storeSensorData(deviceSerialNum, sensorDataPairs);
+		} catch (DeviceNotExistException e) {
+			msg = "Device does not exist.";
+			e.printStackTrace();
+		} catch (SensorNotExistException e) {
+			msg = e.getMessage();
+			e.printStackTrace();
 		}
 		System.out.println("collectAllData: " + msg);
 		return new JSONObject().toString();

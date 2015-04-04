@@ -1,5 +1,10 @@
 package ioedata.sensordata.service;
 
+import java.util.Map;
+
+import org.bson.types.ObjectId;
+
+import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.SensorNotExistException;
 
 
@@ -13,5 +18,7 @@ public interface DataService {
 	 * First check whether the sensor with a typical sensor name exists.
 	 * If it does, return true; if not, return false.
 	 */
-	public boolean storeSensorData(String deviceSerialNum, String sensorName, double sensorDataValue) throws SensorNotExistException;
+	public boolean storeSensorData(String deviceSerialNum, String sensorName, double sensorDataValue) throws SensorNotExistException, DeviceNotExistException;
+	
+	public boolean storeSensorData(ObjectId deviceSerialNum, Map<String , Object> sensorDataPairs) throws DeviceNotExistException, SensorNotExistException;
 }

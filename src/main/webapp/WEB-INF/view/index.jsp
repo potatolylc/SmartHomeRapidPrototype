@@ -65,8 +65,8 @@
 	<h2>sensor data collection - all</h2>
 	<form action="sensorData/collectAll" method="post">
 		deviceSerialNum: <input type="text" name="deviceSerialNum"><br>
-		sensorName1: <input type="text" name="temp">
-		sensorName2: <input type="text" name="humidity">
+		liaochen1humidity1: <input type="text" name="liaochen1humidity1">
+		liaochen1humidity2: <input type="text" name="liaochen1humidity2">
 		<input type="submit" value="sensor data collection - all">
 	</form>
 </body>
