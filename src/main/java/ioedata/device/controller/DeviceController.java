@@ -5,6 +5,7 @@ import ioedata.device.service.DeviceService;
 import ioedata.exception.factory.DeviceDuplicateException;
 import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.UserNotExistException;
+import ioedata.geolocation.model.GeoCoordinate;
 
 import javax.annotation.Resource;
 
@@ -49,6 +50,43 @@ public class DeviceController {
 		try {
 			deviceSerialNum = this.deviceService.registerDevice(userName,
 					userWifiSsid, deviceName);
+			if (deviceSerialNum != null) {
+				flag = true;
+				msg = "Device has been successfully registerd.";
+			}
+		} catch (DeviceDuplicateException e) {
+			msg = "Device already exists.";
+			e.printStackTrace();
+		} catch (UserNotExistException e) {
+			msg = "User does not exist.";
+			e.printStackTrace();
+		} catch (Exception e) {
+			msg = "Something goes wrong with device registration. ";
+			e.printStackTrace();
+		}
+		System.out.println("deviceRegistration: " + msg);
+		return new JSONObject().put("result", flag).put("message", msg)
+				.put("deviceSerialNum", deviceSerialNum).toString();
+	}
+	
+	/*
+	 * Register a new device with geospatial information.
+	 */
+	@RequestMapping(value = "/registerWithGeo", method = RequestMethod.POST)
+	@ResponseBody
+	public String deviceRegistration(@RequestParam("userName") String userName,
+			@RequestParam("userWifiSsid") String userWifiSsid,
+			@RequestParam("deviceName") String deviceName, 
+			@RequestParam("longitude") double longitude,
+			@RequestParam("latitude") double latitude) throws JSONException {
+		System.out.println("deviceRegistration: " + userName + " "
+				+ userWifiSsid + " " + deviceName + " (" + longitude + ", " + latitude + ")");
+		ObjectId deviceSerialNum = null;
+		boolean flag = false;
+		String msg = null;
+		try {
+			deviceSerialNum = this.deviceService.registerDevice(userName,
+					userWifiSsid, deviceName, new GeoCoordinate(longitude, latitude));
 			if (deviceSerialNum != null) {
 				flag = true;
 				msg = "Device has been successfully registerd.";

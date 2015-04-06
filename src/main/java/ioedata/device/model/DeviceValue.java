@@ -1,6 +1,7 @@
 package ioedata.device.model;
 
 import ioedata.actuator.model.ActuatorValue;
+import ioedata.geolocation.model.GeoCoordinate;
 import ioedata.mongodb.repository.DBUtils;
 import ioedata.sensor.model.SensorValue;
 
@@ -9,11 +10,14 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * This class creates data transport objects that contain the devices' information,
- * such as the IP address, device ID and password of various devices. 
+ * This class creates data transport objects that contain the devices'
+ * information, such as the IP address, device ID and password of various
+ * devices.
+ * 
  * @author ajou
  */
 @Document(collection = DBUtils.DEVICE_COLLECTION_NAME)
@@ -23,11 +27,11 @@ public class DeviceValue {
 	private String deviceName;
 	private int userSerialNum;
 	private Date deviceTimestamp;
-	//@DBRef
+	@Indexed
+	private GeoCoordinate geoCoordinate;
 	private List<SensorValue> sensors;
-	//@DBRef
 	private List<ActuatorValue> actuators;
-	
+
 	public DeviceValue() {
 		super();
 	}
@@ -45,13 +49,27 @@ public class DeviceValue {
 	}
 
 	public DeviceValue(ObjectId deviceSerialNum, String deviceName,
-			int userSerialNum, Date deviceTimestamp,
-			List<SensorValue> sensors, List<ActuatorValue> actuators) {
+			int userSerialNum, Date deviceTimestamp, List<SensorValue> sensors,
+			List<ActuatorValue> actuators) {
 		super();
 		this.deviceSerialNum = deviceSerialNum;
 		this.deviceName = deviceName;
 		this.userSerialNum = userSerialNum;
 		this.deviceTimestamp = deviceTimestamp;
+		this.sensors = sensors;
+		this.actuators = actuators;
+	}
+
+	public DeviceValue(ObjectId deviceSerialNum, String deviceName,
+			int userSerialNum, Date deviceTimestamp,
+			GeoCoordinate geoCoordinate, List<SensorValue> sensors,
+			List<ActuatorValue> actuators) {
+		super();
+		this.deviceSerialNum = deviceSerialNum;
+		this.deviceName = deviceName;
+		this.userSerialNum = userSerialNum;
+		this.deviceTimestamp = deviceTimestamp;
+		this.geoCoordinate = geoCoordinate;
 		this.sensors = sensors;
 		this.actuators = actuators;
 	}
@@ -88,6 +106,14 @@ public class DeviceValue {
 		this.deviceTimestamp = deviceTimestamp;
 	}
 
+	public GeoCoordinate getGeoCoordinate() {
+		return geoCoordinate;
+	}
+
+	public void setGeoCoordinate(GeoCoordinate geoCoordinate) {
+		this.geoCoordinate = geoCoordinate;
+	}
+
 	public List<SensorValue> getSensors() {
 		return sensors;
 	}
@@ -109,7 +135,8 @@ public class DeviceValue {
 		return "DeviceValue [deviceSerialNum=" + deviceSerialNum
 				+ ", deviceName=" + deviceName + ", userSerialNum="
 				+ userSerialNum + ", deviceTimestamp=" + deviceTimestamp
-				+ ", sensors=" + sensors + ", actuators=" + actuators + "]";
+				+ ", geoCoordinate=" + geoCoordinate + ", sensors=" + sensors
+				+ ", actuators=" + actuators + "]";
 	}
-	
+
 }

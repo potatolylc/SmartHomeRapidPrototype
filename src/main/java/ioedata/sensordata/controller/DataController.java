@@ -1,6 +1,5 @@
 package ioedata.sensordata.controller;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +76,7 @@ public class DataController {
 			sensorDataPairs.put(requestParam, paramVal);
 		}
 		try {
-			this.dataService.storeSensorData(deviceSerialNum, sensorDataPairs);
+			flag = this.dataService.storeSensorData(deviceSerialNum, sensorDataPairs);
 		} catch (DeviceNotExistException e) {
 			msg = "Device does not exist.";
 			e.printStackTrace();
@@ -86,7 +85,7 @@ public class DataController {
 			e.printStackTrace();
 		}
 		System.out.println("collectAllData: " + msg);
-		return new JSONObject().toString();
+		return new JSONObject().put("result", flag).put("message", msg).toString();
 	}
 
 	/*

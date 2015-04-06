@@ -29,6 +29,7 @@ public interface Sensor {
 	public static final int TYPE_DIGITAL_VIBRATION = 11;
 	public static final int TYPE_INFRARED_MOTION = 12;
 	public static final int TYPE_TOUCH = 13;
+	public static final int TYPE_PRESSURE = 14;
 
 	/*
 	 * Define sensor data collection time intervals

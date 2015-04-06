@@ -1,12 +1,14 @@
 package ioedata.device.repository;
 
 import ioedata.device.model.DeviceValue;
+import ioedata.geolocation.model.GeoCoordinate;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -16,7 +18,8 @@ import org.springframework.stereotype.Repository;
 import com.mongodb.WriteResult;
 
 @Repository
-public class DeviceRepositoryImpl implements DeviceRepository<DeviceValue, ObjectId> {
+public class DeviceRepositoryImpl implements
+		DeviceRepository<DeviceValue, ObjectId> {
 	@Resource(name = "mongoTemplate")
 	private MongoTemplate template;
 
@@ -28,7 +31,8 @@ public class DeviceRepositoryImpl implements DeviceRepository<DeviceValue, Objec
 
 	@Override
 	public DeviceValue findOneObject(ObjectId id) {
-		return this.template.findOne(new Query(Criteria.where("_id").is(id)), DeviceValue.class);
+		return this.template.findOne(new Query(Criteria.where("_id").is(id)),
+				DeviceValue.class);
 	}
 
 	@Override
@@ -41,30 +45,29 @@ public class DeviceRepositoryImpl implements DeviceRepository<DeviceValue, Objec
 		Update update = new Update();
 		update.addToSet("sensors", deviceVal.getSensors().get(0));
 		return this.template.upsert(
-				new Query(
-						Criteria.where("_id").is(deviceVal.getDeviceSerialNum())), update, DeviceValue.class);
-						
+				new Query(Criteria.where("_id").is(
+						deviceVal.getDeviceSerialNum())), update,
+				DeviceValue.class);
+
 	}
 
 	@Override
 	public void deleteObject(ObjectId id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public boolean isObjectExist(ObjectId id) {
-		return this.template.exists(new Query(Criteria.where("_id").is(id)), 
-												DeviceValue.class);
+		return this.template.exists(new Query(Criteria.where("_id").is(id)),
+				DeviceValue.class);
 	}
 
 	@Override
 	public boolean isObjectExist(int userSerialNum, String deviceName) {
 		return this.template.exists(new Query(Criteria.where("userSerialNum")
-																			.is(userSerialNum)
-																			.and("deviceName")
-																			.is(deviceName)), 
-												DeviceValue.class);
+				.is(userSerialNum).and("deviceName").is(deviceName)),
+				DeviceValue.class);
 	}
 
 	@Override
@@ -74,11 +77,21 @@ public class DeviceRepositoryImpl implements DeviceRepository<DeviceValue, Objec
 	}
 
 	@Override
-	public DeviceValue findByDeviceNameAndUserSerialNum(String deviceName, int userSerialNum) {
+	public DeviceValue findByDeviceNameAndUserSerialNum(String deviceName,
+			int userSerialNum) {
 		return (DeviceValue) this.template.findOne(
 				new Query(Criteria.where("deviceName").is(deviceName)
-											.and("userSerialNum").is(userSerialNum)), 
-								DeviceValue.class);
+						.and("userSerialNum").is(userSerialNum)),
+				DeviceValue.class);
+	}
+
+	@Override
+	public List<DeviceValue> findByGeoCoordinate(GeoCoordinate geoCoordinate,
+			int distance) {
+		Point point = new Point(geoCoordinate.getLongitude(),
+				geoCoordinate.getLatitude());
+		return this.template.find(new Query(Criteria.where("geoCoordinate")
+				.near(point).maxDistance(distance)).limit(10), DeviceValue.class);
 	}
 
 }

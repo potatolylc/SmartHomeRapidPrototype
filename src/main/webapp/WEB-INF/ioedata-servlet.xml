@@ -74,12 +74,12 @@
 		</list> </property> </bean> -->
 
 	<!-- Interceptor Config -->
-	<mvc:interceptors>
+	<!-- <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/coap/{uri}" />
 			<bean class="ioedata.interceptor.CoapInterceptor"></bean>
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 
 	<!-- AOP Config -->
 	<!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy> <bean id="log" class="killer.aop.KillerLogging"></bean> -->

@@ -1,11 +1,14 @@
 package ioedata.device.service;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 
 import ioedata.device.model.DeviceValue;
 import ioedata.exception.factory.DeviceDuplicateException;
 import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.UserNotExistException;
+import ioedata.geolocation.model.GeoCoordinate;
 
 /**
  * This interface provides many methods to deal with end devices,
@@ -20,6 +23,13 @@ public interface DeviceService {
 	 * If the device does not exist and has been inserted into database successfully, return true value; else, return false.
 	 */
 	public ObjectId registerDevice(String userName, String userWifiSsid, String deviceName) throws UserNotExistException, DeviceDuplicateException;
+
+	/*
+	 * Store new device information into database.
+	 * Before storing new device into database, it first checks whether the device serial number has already been stored in the database.
+	 * If the device does not exist and has been inserted into database successfully, return true value; else, return false.
+	 */
+	public ObjectId registerDevice(String userName, String userWifiSsid, String deviceName, GeoCoordinate coordinate) throws UserNotExistException, DeviceDuplicateException;
 	
 	/*
 	 * Get device serial number by device name and user serial number
@@ -57,5 +67,10 @@ public interface DeviceService {
 	 * Upsert device information
 	 */
 	public void updateDeviceInfo(DeviceValue deviceValue);
+	
+	/*
+	 * Get device list within a circle geospatial area using a geolocation coordinate
+	 */
+	public List<DeviceValue> retrieveDeviceListWithinCircle(GeoCoordinate geoCoordinate, int distance);
 	
 }

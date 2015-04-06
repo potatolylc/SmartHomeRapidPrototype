@@ -12,6 +12,7 @@ insert into IOESENSORTYPE values(10, 'DIGITAL_TILT', null);
 insert into IOESENSORTYPE values(11, 'DIGITAL_VIBRATION', null);
 insert into IOESENSORTYPE values(12, 'INFRARED_MOTION', null);
 insert into IOESENSORTYPE values(13, 'TOUCH', null);
+insert into IOESENSORTYPE values(14, 'PRESSURE', 'hPA');
 
 -- SELECT 문
 select * from IOESENSORTYPE

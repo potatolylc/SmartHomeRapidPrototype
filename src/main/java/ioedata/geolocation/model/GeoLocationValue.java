@@ -8,7 +8,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = DBUtils.GEO_LOCATION_NAME)
+@Document(collection = DBUtils.GEO_LOCATION_COLLECTION_NAME)
 public class GeoLocationValue {
 	@Id
 	private ObjectId geoSerialNum;
@@ -21,6 +21,21 @@ public class GeoLocationValue {
 		super();
 	}
 	
+	public GeoLocationValue(double longitude, double latitude) {
+		super();
+		this.longitude = longitude;
+		this.latitude = latitude;
+	}
+
+	public GeoLocationValue(double longitude, double latitude,
+			Date geoTimestamp, int userSerialNum) {
+		super();
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.geoTimestamp = geoTimestamp;
+		this.userSerialNum = userSerialNum;
+	}
+
 	public GeoLocationValue(ObjectId geoSerialNum, double longitude,
 			double latitude, Date geoTimestamp, int userSerialNum) {
 		super();

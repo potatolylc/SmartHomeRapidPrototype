@@ -44,6 +44,16 @@
 		<input type="submit" value="device registration">
 	</form>
 	<br><br>
+	<h2>device registration with coordinate</h2><br>
+	<form action="device/registerWithGeo" method="post">
+		userName: <input type="text" name="userName"><br>
+		userWifiSsid: <input type="text" name="userWifiSsid"><br>
+		deviceName: <input type="text" name="deviceName"><br>
+		longitude: <input type="text" name="longitude"><br>
+		latitude: <input type="text" name="latitude"><br>
+		<input type="submit" value="device registration">
+	</form>
+	<br><br>
 	<h2>sensor registration</h2><br>
 	<form action="sensor/register" method="post">
 		userName: <input type="text" name="userName"><br>
@@ -76,7 +86,16 @@
 		userWifiSsid: <input type="text" name="userWifiSsid"><br>
 		longitude: <input type="text" name="longitude">
 		latitude: <input type="text" name="latitude">
-		<input type="submit" value="sensor data collection - all">
+		<input type="submit" value="location push">
+	</form>
+	<br><br>
+	<h2>weather</h2>
+	<form action="weather/push" method="post">
+		userName: <input type="text" name="userName"><br>
+		userWifiSsid: <input type="text" name="userWifiSsid"><br>
+		temperature: <input type="text" name="temperatureCel">
+		humidity: <input type="text" name="humidity">
+		<input type="submit" value="weather push">
 	</form>
 </body>
 </html>

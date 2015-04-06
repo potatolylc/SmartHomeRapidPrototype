@@ -58,6 +58,8 @@ public final class SensorManager {
 		case Sensor.TYPE_TOUCH:
 			sensor = new TouchSensor();
 			break;
+		case Sensor.TYPE_PRESSURE:
+			sensor = new PressureSensor();
 		default:
 			break;
 		}
@@ -95,7 +97,9 @@ public final class SensorManager {
 			sensorTypeNum = Sensor.TYPE_INFRARED_MOTION;
 		} else if(sensorType.equals("touch")) {
 			sensorTypeNum = Sensor.TYPE_TOUCH;
-		} 
+		} else if(sensorType.equals("pressure")) {
+			sensorTypeNum = Sensor.TYPE_PRESSURE;
+		}
 		return sensorTypeNum;
 	}
 
