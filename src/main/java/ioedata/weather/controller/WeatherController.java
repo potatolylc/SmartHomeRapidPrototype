@@ -30,7 +30,7 @@ public class WeatherController {
 	@Resource(name = "weatherServiceImpl")
 	private WeatherService weatherService;
 
-	@RequestMapping(value = "/push", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
 	public String weatherLog(HttpServletRequest request,
 				@RequestParam("userName") String userName,

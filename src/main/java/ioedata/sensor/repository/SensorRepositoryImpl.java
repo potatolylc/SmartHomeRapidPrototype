@@ -15,7 +15,8 @@ import com.mongodb.WriteResult;
 import ioedata.sensor.model.SensorValue;
 
 @Repository
-public class SensorRepositoryImpl implements SensorRepository<SensorValue, ObjectId> {
+public class SensorRepositoryImpl implements
+		SensorRepository<SensorValue, ObjectId> {
 	@Resource(name = "mongoTemplate")
 	private MongoTemplate template;
 
@@ -27,8 +28,8 @@ public class SensorRepositoryImpl implements SensorRepository<SensorValue, Objec
 
 	@Override
 	public SensorValue findOneObject(ObjectId id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.template.findOne(new Query(Criteria.where("_id").is(id)),
+				SensorValue.class);
 	}
 
 	@Override
@@ -45,24 +46,20 @@ public class SensorRepositoryImpl implements SensorRepository<SensorValue, Objec
 	@Override
 	public void deleteObject(ObjectId id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public boolean isObjectExist(ObjectId id) {
-		this.template.exists(new Query(
-											Criteria.where("_id").is(id)), 
-									SensorValue.class);
-		return false;
+		return this.template.exists(new Query(Criteria.where("_id").is(id)),
+				SensorValue.class);
 	}
 
 	@Override
 	public boolean isObjectExist(ObjectId deviceSerialNum, String sensorName) {
 		return this.template.exists(new Query(Criteria.where("deviceSerialNum")
-																			.is(deviceSerialNum)
-																			.and("sensorName")
-																			.is(sensorName)), 
-												SensorValue.class);
+				.is(deviceSerialNum).and("sensorName").is(sensorName)),
+				SensorValue.class);
 	}
 
 	@Override
@@ -75,10 +72,8 @@ public class SensorRepositoryImpl implements SensorRepository<SensorValue, Objec
 	public SensorValue findBySensorNameAndDeviceSerialNum(String sensorName,
 			ObjectId deviceSerialNum) {
 		return this.template.findOne(
-						new Query(Criteria.where("sensorName")
-												.is(sensorName)
-												.and("deviceSerialNum")
-												.is(deviceSerialNum)),
-						SensorValue.class);
+				new Query(Criteria.where("sensorName").is(sensorName)
+						.and("deviceSerialNum").is(deviceSerialNum)),
+				SensorValue.class);
 	}
 }

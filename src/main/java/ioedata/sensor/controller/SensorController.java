@@ -32,7 +32,7 @@ public class SensorController {
 	@Resource(name = "sensorServiceImpl")
 	SensorService sensorService;
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
 	public String sensorRegistration(@RequestParam("userName") String userName,
 			@RequestParam("userWifiSsid") String userWifiSsid,
@@ -68,7 +68,7 @@ public class SensorController {
 				.put("sensorSerialNum", sensorSerialNum).toString();
 	}
 
-	@RequestMapping(value = "/retrieve/{sensorSerialNum}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{sensorSerialNum}", method = RequestMethod.GET)
 	@ResponseBody
 	public String sensorInformation(
 			@PathVariable("sensorSerialNum") String sensorSerialNum)
@@ -93,11 +93,11 @@ public class SensorController {
 				.toString();
 	}
 
-	@RequestMapping(value = "/retrieve/{deviceSerialNum}/{sensorName}", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseBody
 	public String sensorInformation(
-			@PathVariable("deviceSerialNum") String deviceSerialNum,
-			@PathVariable("sensorName") String sensorName) throws JSONException {
+			@RequestParam("deviceSerialNum") String deviceSerialNum,
+			@RequestParam("sensorName") String sensorName) throws JSONException {
 		System.out.println("sensorInformation: " + deviceSerialNum + " "
 				+ sensorName);
 		SensorValue sensorValRet = null;
@@ -122,7 +122,7 @@ public class SensorController {
 				.toString();
 	}
 
-	@RequestMapping(value = "/retrieve/{userSerialNum}/{deviceName}/{sensorName}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/{userSerialNum}/{deviceName}/{sensorName}", method = RequestMethod.GET)
 	@ResponseBody
 	public String sensorInformation(
 			@PathVariable("userSerialNum") int userSerialNum,
@@ -155,7 +155,7 @@ public class SensorController {
 				.toString();
 	}
 
-	@RequestMapping(value = "/retrieve/{userName}/{userWifiSsid}/{deviceName}/{sensorName}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{userName}/{userWifiSsid}/{deviceName}/{sensorName}", method = RequestMethod.GET)
 	@ResponseBody
 	public String sensorInformation(@PathVariable("userName") String userName,
 			@PathVariable("userWifiSsid") String userWifiSsid,
@@ -185,5 +185,5 @@ public class SensorController {
 				.put("sensorTimestamp", sensorValRet.getSensorTimestamp())
 				.put("sensorTypeNum", sensorValRet.getSensorTypeNum())
 				.toString();
-	}
+	}*/
 }

@@ -2,16 +2,19 @@ package ioedata.sensordata.controller;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.SensorNotExistException;
+import ioedata.sensordata.model.SensorDataValue;
 import ioedata.sensordata.service.DataService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.bson.types.ObjectId;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -33,17 +36,20 @@ public class DataController {
 	@Resource(name = "dataServiceImpl")
 	private DataService dataService;
 
-	@RequestMapping(value = "/collect", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
 	public String collectData(
 			@RequestParam("deviceSerialNum") String deviceSerialNum,
 			@RequestParam("sensorName") String sensorName,
-			@RequestParam("sensorDataValue") double sensorDataValue) throws JSONException {
-		System.out.println("collectData: " + deviceSerialNum + " " + sensorName + " " + sensorDataValue);
+			@RequestParam("sensorDataValue") double sensorDataValue)
+			throws JSONException {
+		System.out.println("collectData: " + deviceSerialNum + " " + sensorName
+				+ " " + sensorDataValue);
 		boolean flag = false;
 		String msg = null;
 		try {
-			flag = this.dataService.storeSensorData(deviceSerialNum, sensorName, sensorDataValue);
+			flag = this.dataService.storeSensorData(deviceSerialNum,
+					sensorName, sensorDataValue);
 			if (flag)
 				msg = "Sensor data has been stored.";
 			else
@@ -56,27 +62,30 @@ public class DataController {
 			e.printStackTrace();
 		}
 		System.out.println("collectData: " + msg);
-		return new JSONObject().put("result", flag).put("message", msg).toString();
+		return new JSONObject().put("result", flag).put("message", msg)
+				.toString();
 	}
 
-	@RequestMapping(value = "/collectAll", method = RequestMethod.POST)
+	@RequestMapping(value = "/all", method = RequestMethod.POST)
 	@ResponseBody
-	public String collectData(HttpServletRequest request, 
-			@RequestParam("deviceSerialNum") ObjectId deviceSerialNum) throws JSONException {
+	public String collectData(HttpServletRequest request,
+			@RequestParam("deviceSerialNum") ObjectId deviceSerialNum)
+			throws JSONException {
 		System.out.println("collectData all: " + deviceSerialNum);
 		boolean flag = false;
 		String msg = null;
-		Map<String , Object> sensorDataPairs = new HashMap<String, Object>();
+		Map<String, Object> sensorDataPairs = new HashMap<String, Object>();
 		Enumeration<String> requestParams = request.getParameterNames();
-		while(requestParams.hasMoreElements()) {
+		while (requestParams.hasMoreElements()) {
 			String requestParam = requestParams.nextElement();
-			if(requestParam.equals("deviceSerialNum"))
+			if (requestParam.equals("deviceSerialNum"))
 				continue;
 			String paramVal = request.getParameter(requestParam);
 			sensorDataPairs.put(requestParam, paramVal);
 		}
 		try {
-			flag = this.dataService.storeSensorData(deviceSerialNum, sensorDataPairs);
+			flag = this.dataService.storeSensorData(deviceSerialNum,
+					sensorDataPairs);
 		} catch (DeviceNotExistException e) {
 			msg = "Device does not exist.";
 			e.printStackTrace();
@@ -84,110 +93,39 @@ public class DataController {
 			msg = e.getMessage();
 			e.printStackTrace();
 		}
-		System.out.println("collectAllData: " + msg);
-		return new JSONObject().put("result", flag).put("message", msg).toString();
+		return new JSONObject().put("result", flag).put("message", msg)
+				.toString();
 	}
 
-	@RequestMapping(value = "/monitor/{deviceSerialNum}")
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseBody
-	public String retrieveData() throws JSONException {
-		System.out.println("1111111111");
-		return new JSONObject()
-		.put("result", true)
-		.put("temperatureCel", "25.5")
-		.put("lightBrightness", "300")
-		.put("humidity", "40").toString();
+	public String retrieveData(
+			@RequestParam("sensorSerialNum") String sensorSerialNum,
+			@RequestParam("startTime") String startTime,
+			@RequestParam("endTime") String endTime) throws JSONException {
+		System.out.println("retrieveData: " + sensorSerialNum + " " + startTime
+				+ " " + endTime);
+		
+		List<SensorDataValue> sensorDataList = null;
+		try {
+			sensorDataList = this.dataService.retrieveData(sensorSerialNum, startTime, endTime);
+			if(sensorDataList != null) {
+				for(int i = 0; i < sensorDataList.size(); i++) {
+					System.out.println(sensorDataList.get(i));
+				}
+			}
+		} catch (SensorNotExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(new JSONArray(sensorDataList).toString());
+		return new JSONArray(sensorDataList).toString();
 	}
-	/*
-	 * @RequestMapping(value =
-	 * "/retrieve/{deviceId}/{sensorType}/{retrieveType}", method =
-	 * RequestMethod.GET)
-	 * 
-	 * @ResponseBody public String retrieveData(@PathVariable("deviceId") String
-	 * deviceId, @PathVariable("sensorType") String sensorType,
-	 * @PathVariable("retrieveType") String retrieveType) throws
-	 * UnknownHostException, IOException {
-	 * System.out.println("retrieveDataeee: "+deviceId+" "+retrieveType);
-	 * DataValue dataVal; JSONObject json = new JSONObject(); try { dataVal =
-	 * this.dataService.retrieveData(deviceId, sensorType, retrieveType);
-	 * if(dataVal != null){ json = this.createJsonObjForDataValue(dataVal); } }
-	 * catch (Exception e) { e.printStackTrace(); }
-	 * //System.out.println(json.toString()); return json.toString(); }
-	 * 
-	 * @RequestMapping(value =
-	 * "/retrieveList/{deviceId}/{sensorType}/{retrieveType}", method =
-	 * RequestMethod.GET)
-	 * 
-	 * @ResponseBody public String retrieveDataList(@PathVariable("deviceId")
-	 * String deviceId, @PathVariable("sensorType") String sensorType,
-	 * @PathVariable("retrieveType") String retrieveType) {
-	 * System.out.println("retrieveDataList: "
-	 * +deviceId+" "+sensorType+" "+retrieveType); return null; }
-	 * 
-	 * @RequestMapping(value =
-	 * "/retrieveList/{deviceId}/{sensorType}/{startDate}/{endDate}", method =
-	 * RequestMethod.GET)
-	 * 
-	 * @ResponseBody public String
-	 * retrieveDataListByDate(@PathVariable("deviceId") String deviceId,
-	 * @PathVariable("sensorType") String sensorType, @PathVariable("startDate")
-	 * String startDate, @PathVariable("endDate") String endDate) throws
-	 * JSONException{
-	 * System.out.println("retrieveDataListByDate: "+deviceId+" "+
-	 * sensorType+" "+startDate+" "+endDate); JSONArray jsonArr = new
-	 * JSONArray(); try { List<DataValue> dataList =
-	 * this.dataService.retrieveDataList(deviceId, sensorType, startDate,
-	 * endDate); if(dataList != null){ jsonArr =
-	 * this.createJsonArrayForDataValueList(dataList);
-	 * //System.out.println(jsonArr.length()+" "+jsonArr.toString()); } } catch
-	 * (Exception e) { e.printStackTrace(); } return new
-	 * JSONObject().put("dataList", jsonArr).toString(); }
-	 * 
-	 * @RequestMapping(value =
-	 * "/retrieveList/{deviceId}/{sensorType}/{startDate}/{startTime}/{endDate}/{endTime}"
-	 * , method = RequestMethod.GET)
-	 * 
-	 * @ResponseBody public String
-	 * retrieveDataListByTime(@PathVariable("deviceId") String deviceId,
-	 * @PathVariable("sensorType") String sensorType, @PathVariable("startDate")
-	 * String startDate, @PathVariable("startTime") String startTime,
-	 * @PathVariable("endDate") String endDate, @PathVariable("endTime") String
-	 * endTime) throws JSONException{
-	 * System.out.println("retrieveDataListByTime: "
-	 * +deviceId+" "+sensorType+" "+
-	 * startDate+" "+startTime+" "+endDate+" "+endTime); JSONArray jsonArr = new
-	 * JSONArray(); try { List<DataValue> dataList =
-	 * this.dataService.retrieveDataList(deviceId, sensorType, startDate,
-	 * startTime, endDate, endTime); if(dataList != null){ jsonArr =
-	 * this.createJsonArrayForDataValueList(dataList);
-	 * //System.out.println(jsonArr.length()+" "+jsonArr.toString()); } } catch
-	 * (Exception e) { e.printStackTrace(); } return new
-	 * JSONObject().put("dataList", jsonArr).toString(); }
-	 * 
-	 * 
-	 * private JSONObject createJsonObjForDataValue(DataValue dataVal) throws
-	 * JSONException{ JSONObject json = new JSONObject(); json.put("dataValue",
-	 * dataVal.getSensorDataValue()); json.put("unit",
-	 * dataVal.getSensorValue().getSensorTypeValue().getUnit());
-	 * json.put("timestamp", dataVal.getSensorDataTimestamp());
-	 * json.put("timestampStr", dataVal.getSensorDataTimestampStr());
-	 * json.put("sensorType",
-	 * dataVal.getSensorValue().getSensorTypeValue().getSensorType());
-	 * json.put("deviceId",
-	 * dataVal.getSensorValue().getDeviceValue().getDeviceId()); return json; }
-	 * 
-	 * private JSONArray createJsonArrayForDataValueList(List<DataValue>
-	 * dataList) throws JSONException{ JSONArray jsonArr = new JSONArray();
-	 * for(DataValue dataVal : dataList){ //System.out.println(dataVal);
-	 * JSONObject json = new JSONObject(); json.put("dataValue",
-	 * dataVal.getSensorDataValue()); json.put("unit",
-	 * dataVal.getSensorValue().getSensorTypeValue().getUnit());
-	 * json.put("timestamp", dataVal.getSensorDataTimestamp());
-	 * json.put("timestampStr", dataVal.getSensorDataTimestampStr());
-	 * json.put("sensorType",
-	 * dataVal.getSensorValue().getSensorTypeValue().getSensorType());
-	 * json.put("deviceId",
-	 * dataVal.getSensorValue().getDeviceValue().getDeviceId());
-	 * jsonArr.put(json); } return jsonArr; }
-	 */
+
+	@RequestMapping(value = "/average", method = RequestMethod.GET)
+	public String retrieveAverageData(
+			@RequestParam("sensorSerialNum") String sensorSerialNum) {
+		System.out.println("retrieveAverageData: " + sensorSerialNum);
+		return new JSONObject().toString();
+	}
 }

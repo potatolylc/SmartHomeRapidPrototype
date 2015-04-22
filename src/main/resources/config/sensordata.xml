@@ -28,6 +28,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				  #{sensorValue.sensorSerialNumStr})
 	</insert>
 	
+	<select id="getDataListBySensorSerialNumAndStartTimeAndEndTime" parameterType="sensordatavo" resultMap="sensordataRM">
+	    select sensor_data_serial_num, sensor_data_value, 
+				sensor_data_timestamp, 
+				to_char(sensor_data_timestamp, 'YYYY/MM/DD HH24:MI:SS') as sensorDataTimestampStr, 
+				sensor_serial_num
+		from IOESENSORDATA
+		where sensor_serial_num = #{sensorValue.sensorSerialNumStr} 
+		and sensor_data_timestamp between to_date(#{timeValue.startTime}, 'YYYY/MM/DD HH24:MI:SS') 
+												and to_date(#{timeValue.endTime}, 'YYYY/MM/DD HH24:MI:SS')
+		order by sensor_data_timestamp asc
+	</select>
+	
 	<!-- Get the latest data sorted by time sequence by device ID, despite of a sensor type
 	<select id="getLastDataByDeviceIdSortedByTimestamp" parameterType="string" resultMap="dataRM">
 	    select sensor_data_serial_num, sensor_data_value, 

@@ -55,7 +55,7 @@
 	</form>
 	<br><br>
 	<h2>sensor registration</h2><br>
-	<form action="sensor/register" method="post">
+	<form action="sensor" method="post">
 		userName: <input type="text" name="userName"><br>
 		userWifiSsid: <input type="text" name="userWifiSsid"><br>
 		deviceName: <input type="text" name="deviceName"><br>
@@ -65,7 +65,7 @@
 	</form>
 	<br><br>
 	<h2>sensor data collection</h2>
-	<form action="sensorData/collect" method="post">
+	<form action="sensorData" method="post">
 		deviceSerialNum: <input type="text" name="deviceSerialNum"><br>
 		sensorName: <input type="text" name="sensorName"><br>
 		sensorDataValue: <input type="text" name="sensorDataValue"><br>
@@ -73,10 +73,11 @@
 	</form>
 	<br><br>
 	<h2>sensor data collection - all</h2>
-	<form action="sensorData/collectAll" method="post">
+	<form action="sensorData/all" method="post">
 		deviceSerialNum: <input type="text" name="deviceSerialNum"><br>
-		liaochen1humidity1: <input type="text" name="liaochen1humidity1">
-		liaochen1humidity2: <input type="text" name="liaochen1humidity2">
+		lylc1humidity1: <input type="text" name="lylc1humidity1"><br>
+		lylc1lightBrightness1: <input type="text" name="lylc1lightBrightness1"><br>
+		lylc1temperatureCel1: <input type="text" name="lylc1temperatureCel1"><br>
 		<input type="submit" value="sensor data collection - all">
 	</form>
 	<br><br>

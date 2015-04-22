@@ -6,9 +6,11 @@ import ioedata.exception.factory.SensorNotExistException;
 import ioedata.sensor.model.SensorValue;
 import ioedata.sensor.service.SensorService;
 import ioedata.sensordata.model.SensorDataValue;
+import ioedata.sensordata.model.TimeValue;
 import ioedata.sensordata.repository.DataDao;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -88,4 +90,25 @@ public class DataServiceImpl implements DataService {
 		return result == sensorDataPairs.size() ? true : false;
 	}
 
+	@Override
+	public List<SensorDataValue> retrieveData(String sensorSerialNum,
+			String startTime, String endTime) throws SensorNotExistException {
+		List<SensorDataValue> sensorDataList = null;
+		// check whether sensor exists
+		boolean isSensorExistFlag = this.sensorService
+				.isSensorExist(new ObjectId(sensorSerialNum));
+		if (!isSensorExistFlag)
+			throw new SensorNotExistException();
+		SensorValue sensor = this.sensorService.retrieveSensorInfo(sensorSerialNum);
+		sensorDataList = this.dataDao
+				.getDataListBySensorSerialNumAndStartTimeAndEndTime(new SensorDataValue(
+						new SensorValue(sensorSerialNum), new TimeValue(
+								startTime, endTime)));
+		if(sensorDataList != null) {
+			for(SensorDataValue data : sensorDataList) {
+				data.setSensorValue(sensor);
+			}
+		}
+		return sensorDataList;
+	}
 }

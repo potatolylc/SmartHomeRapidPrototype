@@ -25,7 +25,7 @@ public class GeoLocationController {
 	@Resource(name = "geoLocationServiceImpl")
 	private GeoLocationService geoLocationService;
 
-	@RequestMapping(value = "/push", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
 	public String locationLog(
 				@RequestParam("userName") String userName,
