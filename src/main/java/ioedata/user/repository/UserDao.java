@@ -41,5 +41,10 @@ public interface UserDao {
 	/*
 	 * Get user information by user name and WiFi SSID.
 	 */
+	public UserValue getUserInfoByUserSerialNum(int userSerialNum);
+	
+	/*
+	 * Get user information by user name and WiFi SSID.
+	 */
 	public UserValue getUserInfoByUserNameAndSsid(UserValue userVal);
 }

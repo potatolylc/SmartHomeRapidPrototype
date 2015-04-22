@@ -15,9 +15,11 @@ import ioedata.user.model.UserValue;
 import ioedata.user.repository.UserDao;
 
 /**
- * This class implements UserService interface for dealing with services about user.
+ * This class implements UserService interface for dealing with services about
+ * user.
+ * 
  * @author ajou
- *
+ * 
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -53,8 +55,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean authenticateUser(UserValue userVal) throws UserNotExistException {
-		if(! this.isUserExist(userVal.getUserName(), userVal.getUserWifiSsid())){
+	public boolean authenticateUser(UserValue userVal)
+			throws UserNotExistException {
+		if (!this.isUserExist(userVal.getUserName(), userVal.getUserWifiSsid())) {
 			throw new UserNotExistException();
 		}
 		return this.isUserNameAndSsidAndPasswordExist(userVal);
@@ -66,27 +69,42 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int retrieveUserSerialNumByUserNameAndSsidAndPassword(UserValue userVal) {
-		return this.userDao.getUserSerialNumByUserNameAndSsidAndPassword(userVal);
+	public int retrieveUserSerialNumByUserNameAndSsidAndPassword(
+			UserValue userVal) {
+		return this.userDao
+				.getUserSerialNumByUserNameAndSsidAndPassword(userVal);
 	}
 
 	@Override
-	public UserValue retrieveUserInfoByUserNameAndSsid(UserValue userVal) throws UserNotExistException {
-		UserValue userValRet = this.userDao.getUserInfoByUserNameAndSsid(userVal);
-		if(userValRet == null)
+	public UserValue retrieveUserInfoByUserSerialNum(int userSerialNum)
+			throws UserNotExistException {
+		UserValue userValRet = this.userDao
+				.getUserInfoByUserSerialNum(userSerialNum);
+		if (userValRet == null)
+			throw new UserNotExistException();
+		return userValRet;
+	}
+
+	@Override
+	public UserValue retrieveUserInfoByUserNameAndSsid(UserValue userVal)
+			throws UserNotExistException {
+		UserValue userValRet = this.userDao
+				.getUserInfoByUserNameAndSsid(userVal);
+		if (userValRet == null)
 			throw new UserNotExistException();
 		return userValRet;
 	}
 
 	@Override
 	public boolean isUserExist(int userSerialNum) {
-		return this.userDao.getUserCountByUserSerialNum(userSerialNum) > 0 ? true : false;
+		return this.userDao.getUserCountByUserSerialNum(userSerialNum) > 0 ? true
+				: false;
 	}
 
 	@Override
 	public boolean isUserExist(String userName, String userWifiSsid) {
-		return this.userDao.getUserCountByUserNameAndSsid(new UserValue(userName, userWifiSsid)) > 0 ? true
-				: false;
+		return this.userDao.getUserCountByUserNameAndSsid(new UserValue(
+				userName, userWifiSsid)) > 0 ? true : false;
 	}
 
 	private boolean isUserNameAndSsidAndPasswordExist(UserValue userVal) {

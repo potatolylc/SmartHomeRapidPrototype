@@ -59,6 +59,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    		and user_password = #{userPassword}
 	</select>
 	
+	<!-- Get user information by user serial number -->
+	<select id="getUserInfoByUserSerialNum" parameterType="int" resultMap="userRM">
+	    select user_serial_num, user_name, user_wifi_ssid, user_timestamp from IOEUSER
+	    where user_serial_num = #{userSerialNum}
+	</select>
+	
 	<!-- Get user information by user name and WiFi SSID -->
 	<select id="getUserInfoByUserNameAndSsid" parameterType="uservo" resultMap="userRM">
 	    select user_serial_num, user_name, user_wifi_ssid, user_timestamp from IOEUSER

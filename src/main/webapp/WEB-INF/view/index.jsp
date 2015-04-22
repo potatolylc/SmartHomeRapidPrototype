@@ -21,7 +21,7 @@
 		<input type="submit" value="auth token">
 	</form>
 	<h2>user registration</h2><br>
-	<form action="user/register" method="post">
+	<form action="user" method="post">
 		userName: <input type="text" name="userName"><br>
 		userWifiSsid: <input type="text" name="userWifiSsid"><br>
 		userPassword: <br>
@@ -29,7 +29,7 @@
 		<input type="submit" value="user registration">
 	</form>
 	<h2>user authentication</h2><br>
-	<form action="user/auth" method="post">
+	<form action="user/auth" method="get">
 		userName: <input type="text" name="userName"><br>
 		userWifiSsid: <input type="text" name="userWifiSsid"><br>
 		userPassword: <input type="text" name="userPassword"><br>
@@ -37,7 +37,7 @@
 	</form>
 	<br><br>
 	<h2>device registration</h2><br>
-	<form action="device/register" method="post">
+	<form action="device" method="post">
 		userName: <input type="text" name="userName"><br>
 		userWifiSsid: <input type="text" name="userWifiSsid"><br>
 		deviceName: <input type="text" name="deviceName"><br>
@@ -45,7 +45,7 @@
 	</form>
 	<br><br>
 	<h2>device registration with coordinate</h2><br>
-	<form action="device/registerWithGeo" method="post">
+	<form action="device/geo" method="post">
 		userName: <input type="text" name="userName"><br>
 		userWifiSsid: <input type="text" name="userWifiSsid"><br>
 		deviceName: <input type="text" name="deviceName"><br>

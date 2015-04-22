@@ -37,7 +37,7 @@ public class DeviceController {
 	/*
 	 * Register a new device.
 	 */
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
 	public String deviceRegistration(@RequestParam("userName") String userName,
 			@RequestParam("userWifiSsid") String userWifiSsid,
@@ -72,7 +72,7 @@ public class DeviceController {
 	/*
 	 * Register a new device with geospatial information.
 	 */
-	@RequestMapping(value = "/registerWithGeo", method = RequestMethod.POST)
+	@RequestMapping(value = "/geo", method = RequestMethod.POST)
 	@ResponseBody
 	public String deviceRegistration(@RequestParam("userName") String userName,
 			@RequestParam("userWifiSsid") String userWifiSsid,
@@ -109,7 +109,7 @@ public class DeviceController {
 	/*
 	 * Get device information by device serial number.
 	 */
-	@RequestMapping(value = "/retrieve/{deviceSerialNum}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{deviceSerialNum}", method = RequestMethod.GET)
 	@ResponseBody
 	public String deviceInformation(
 			@PathVariable("deviceSerialNum") String deviceSerialNum)
@@ -125,26 +125,41 @@ public class DeviceController {
 			e.printStackTrace();
 			return new JSONObject().put("result", flag).toString();
 		}
-		return new JSONObject()
-				.put("result", flag)
-				.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
-				.put("userSerialNum", deviceValRet.getUserSerialNum())
-				.put("deviceName", deviceValRet.getDeviceName())
-				.put("deviceTimestamp", deviceValRet.getDeviceTimestamp())
-				.put("sensorSerialNums",
-						new JSONArray(deviceValRet.getSensors()))
-				.put("actuatorSerialNums",
-						new JSONArray(deviceValRet.getActuators())).toString();
+		if(deviceValRet.getGeoCoordinate() == null) 
+			return new JSONObject()
+						.put("result", flag)
+						.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
+						.put("userSerialNum", deviceValRet.getUserSerialNum())
+						.put("deviceName", deviceValRet.getDeviceName())
+						.put("deviceTimestamp", deviceValRet.getDeviceTimestamp())
+						.put("sensorSerialNums",
+								new JSONArray(deviceValRet.getSensors()))
+						.put("actuatorSerialNums",
+								new JSONArray(deviceValRet.getActuators())).toString();	
+		else
+			return new JSONObject()
+						.put("result", flag)
+						.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
+						.put("userSerialNum", deviceValRet.getUserSerialNum())
+						.put("deviceName", deviceValRet.getDeviceName())
+						.put("deviceTimestamp", deviceValRet.getDeviceTimestamp())
+						.put("geoCoordinate", new JSONObject()
+													.put("longitude", deviceValRet.getGeoCoordinate().getLongitude())
+													.put("latitude", deviceValRet.getGeoCoordinate().getLatitude()))
+						.put("sensorSerialNums",
+								new JSONArray(deviceValRet.getSensors()))
+						.put("actuatorSerialNums",
+								new JSONArray(deviceValRet.getActuators())).toString();
 	}
 
 	/*
 	 * Get device information by user serial number and device name.
 	 */
-	@RequestMapping(value = "/retrieve/{userSerialNum}/{deviceName}", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseBody
 	public String deviceInformation(
-			@PathVariable("userSerialNum") int userSerialNum,
-			@PathVariable("deviceName") String deviceName) throws JSONException {
+			@RequestParam("userSerialNum") int userSerialNum,
+			@RequestParam("deviceName") String deviceName) throws JSONException {
 		System.out.println("deviceInformation: " + userSerialNum + " "
 				+ deviceName);
 		DeviceValue deviceValRet = null;
@@ -160,26 +175,41 @@ public class DeviceController {
 			e.printStackTrace();
 			return new JSONObject().put("result", flag).toString();
 		}
-		return new JSONObject()
-				.put("result", flag)
-				.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
-				.put("userSerialNum", deviceValRet.getUserSerialNum())
-				.put("deviceName", deviceValRet.getDeviceName())
-				.put("deviceTimestamp", deviceValRet.getDeviceTimestamp())
-				.put("sensorSerialNums",
-						new JSONArray(deviceValRet.getSensors()))
-				.put("actuatorSerialNums",
-						new JSONArray(deviceValRet.getActuators())).toString();
+		if(deviceValRet.getGeoCoordinate() == null) 
+			return new JSONObject()
+						.put("result", flag)
+						.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
+						.put("userSerialNum", deviceValRet.getUserSerialNum())
+						.put("deviceName", deviceValRet.getDeviceName())
+						.put("deviceTimestamp", deviceValRet.getDeviceTimestamp())
+						.put("sensorSerialNums",
+								new JSONArray(deviceValRet.getSensors()))
+						.put("actuatorSerialNums",
+								new JSONArray(deviceValRet.getActuators())).toString();	
+		else
+			return new JSONObject()
+						.put("result", flag)
+						.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
+						.put("userSerialNum", deviceValRet.getUserSerialNum())
+						.put("deviceName", deviceValRet.getDeviceName())
+						.put("deviceTimestamp", deviceValRet.getDeviceTimestamp())
+						.put("geoCoordinate", new JSONObject()
+													.put("longitude", deviceValRet.getGeoCoordinate().getLongitude())
+													.put("latitude", deviceValRet.getGeoCoordinate().getLatitude()))
+						.put("sensorSerialNums",
+								new JSONArray(deviceValRet.getSensors()))
+						.put("actuatorSerialNums",
+								new JSONArray(deviceValRet.getActuators())).toString();
 	}
 
 	/*
 	 * Get device information by user name, user WiFi SSID and device name.
 	 */
-	@RequestMapping(value = "/retrieve/{userName}/{userWifiSsid}/{deviceName}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseBody
-	public String deviceInformation(@PathVariable("userName") String userName,
-			@PathVariable("userWifiSsid") String userWifiSsid,
-			@PathVariable("deviceName") String deviceName) throws JSONException {
+	public String deviceInformation(@RequestParam("userName") String userName,
+			@RequestParam("userWifiSsid") String userWifiSsid,
+			@RequestParam("deviceName") String deviceName) throws JSONException {
 		System.out.println("deviceInformation: " + userName + " "
 				+ userWifiSsid + " " + deviceName);
 		DeviceValue deviceValRet = null;
@@ -194,15 +224,30 @@ public class DeviceController {
 			e.printStackTrace();
 			return new JSONObject().put("result", flag).toString();
 		}
-		return new JSONObject()
-				.put("result", flag)
-				.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
-				.put("userSerialNum", deviceValRet.getUserSerialNum())
-				.put("deviceName", deviceValRet.getDeviceName())
-				.put("deviceTimestamp", deviceValRet.getDeviceTimestamp())
-				.put("sensorSerialNums",
-						new JSONArray(deviceValRet.getSensors()))
-				.put("actuatorSerialNums",
-						new JSONArray(deviceValRet.getActuators())).toString();
-	}
+		if(deviceValRet.getGeoCoordinate() == null) 
+			return new JSONObject()
+						.put("result", flag)
+						.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
+						.put("userSerialNum", deviceValRet.getUserSerialNum())
+						.put("deviceName", deviceValRet.getDeviceName())
+						.put("deviceTimestamp", deviceValRet.getDeviceTimestamp())
+						.put("sensorSerialNums",
+								new JSONArray(deviceValRet.getSensors()))
+						.put("actuatorSerialNums",
+								new JSONArray(deviceValRet.getActuators())).toString();	
+		else
+			return new JSONObject()
+						.put("result", flag)
+						.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
+						.put("userSerialNum", deviceValRet.getUserSerialNum())
+						.put("deviceName", deviceValRet.getDeviceName())
+						.put("deviceTimestamp", deviceValRet.getDeviceTimestamp())
+						.put("geoCoordinate", new JSONObject()
+													.put("longitude", deviceValRet.getGeoCoordinate().getLongitude())
+													.put("latitude", deviceValRet.getGeoCoordinate().getLatitude()))
+						.put("sensorSerialNums",
+								new JSONArray(deviceValRet.getSensors()))
+						.put("actuatorSerialNums",
+								new JSONArray(deviceValRet.getActuators())).toString();
+	}*/
 }

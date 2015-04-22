@@ -44,6 +44,11 @@ public interface UserService {
 	/*
 	 * Get user information using user name and user WiFi SSID.
 	 */
+	public UserValue retrieveUserInfoByUserSerialNum(int userSerialNum) throws UserNotExistException;
+	
+	/*
+	 * Get user information using user name and user WiFi SSID.
+	 */
 	public UserValue retrieveUserInfoByUserNameAndSsid(UserValue userVal) throws UserNotExistException;
 	
 	/*

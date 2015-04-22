@@ -46,9 +46,15 @@ public class UserDaoImpl implements UserDao {
 	public int getUserSerialNumByUserNameAndSsidAndPassword(UserValue userVal) {
 		return this.template.selectOne("user.getUserSerialNumByUserNameAndSsidAndPassword", userVal);
 	}
+	
+	@Override
+	public UserValue getUserInfoByUserSerialNum(int userSerialNum) {
+		return this.template.selectOne("user.getUserInfoByUserSerialNum", userSerialNum);
+	}
 
 	@Override
 	public UserValue getUserInfoByUserNameAndSsid(UserValue userVal) {
 		return this.template.selectOne("user.getUserInfoByUserNameAndSsid", userVal);
 	}
+
 }

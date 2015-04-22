@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -29,7 +30,7 @@ public class UserController {
 	@Resource(name = "userServiceImpl")
 	private UserService userService;
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
 	public String userRegistration(UserValue userVal) throws JSONException {
 		System.out.println("userRegistration: " + userVal);
@@ -52,7 +53,7 @@ public class UserController {
 				.toString();
 	}
 
-	@RequestMapping(value = "/auth", method = RequestMethod.POST)
+	@RequestMapping(value = "/auth", method = RequestMethod.GET)
 	@ResponseBody
 	public String userAuthentication(UserValue userVal) throws JSONException {
 		System.out.println("userAuthentication: " + userVal);
@@ -78,10 +79,32 @@ public class UserController {
 				.put("userSerialNum", userSerialNum).toString();
 	}
 
-	@RequestMapping(value = "/retrieve/{userName}/{userWifiSsid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{userSerialNum}", method = RequestMethod.GET)
 	@ResponseBody
-	public String userInformation(@PathVariable("userName") String userName,
-			@PathVariable("userWifiSsid") String userWifiSsid)
+	public String userInformation(
+			@PathVariable("userSerialNum") int userSerialNum) throws JSONException {
+		System.out.println("userInformation: " + userSerialNum);
+		UserValue userValRet = null;
+		boolean flag = false;
+		try {
+			userValRet = this.userService
+					.retrieveUserInfoByUserSerialNum(userSerialNum);
+			flag = true;
+		} catch (UserNotExistException e) {
+			e.printStackTrace();
+			return new JSONObject().put("result", flag).toString();
+		}
+		return new JSONObject().put("result", flag)
+				.put("userSerialNum", userValRet.getUserSerialNum())
+				.put("userName", userValRet.getUserName())
+				.put("userWifiSsid", userValRet.getUserWifiSsid())
+				.put("userTimestamp", userValRet.getUserTimestamp()).toString();
+	}
+
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	@ResponseBody
+	public String userInformation(@RequestParam("userName") String userName,
+			@RequestParam("userWifiSsid") String userWifiSsid)
 			throws JSONException {
 		System.out.println("userInformation: " + userName + " " + userWifiSsid);
 		UserValue userValRet = null;
@@ -95,8 +118,7 @@ public class UserController {
 			e.printStackTrace();
 			return new JSONObject().put("result", flag).toString();
 		}
-		return new JSONObject()
-				.put("result", flag)
+		return new JSONObject().put("result", flag)
 				.put("userSerialNum", userValRet.getUserSerialNum())
 				.put("userName", userValRet.getUserName())
 				.put("userWifiSsid", userValRet.getUserWifiSsid())
