@@ -7,9 +7,9 @@ import ioedata.auth.service.AuthenticationService;
 import org.jose4j.lang.JoseException;
 import org.json.JSONException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -25,10 +25,10 @@ public class AuthenticationController {
 	@Resource(name = "authenticationServiceImpl")
 	private AuthenticationService authService;
 
-	@RequestMapping(value = "/token/{claim}/{key}", method = RequestMethod.GET) 
+	@RequestMapping(value = "/token", method = RequestMethod.GET) 
 	@ResponseBody
-	public String getAuthToken(@PathVariable("claim") String claim,
-			@PathVariable("key") int key) {
+	public String getAuthToken(@RequestParam(value = "claim") String claim,
+			@RequestParam(value = "key") int key) {
 		System.out.println("getAuthToken: " + claim + " " + key);
 		String authToken = null;
 		try {

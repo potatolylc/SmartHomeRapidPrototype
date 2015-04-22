@@ -88,6 +88,16 @@ public class DataController {
 		return new JSONObject().put("result", flag).put("message", msg).toString();
 	}
 
+	@RequestMapping(value = "/monitor/{deviceSerialNum}")
+	@ResponseBody
+	public String retrieveData() throws JSONException {
+		System.out.println("1111111111");
+		return new JSONObject()
+		.put("result", true)
+		.put("temperatureCel", "25.5")
+		.put("lightBrightness", "300")
+		.put("humidity", "40").toString();
+	}
 	/*
 	 * @RequestMapping(value =
 	 * "/retrieve/{deviceId}/{sensorType}/{retrieveType}", method =
