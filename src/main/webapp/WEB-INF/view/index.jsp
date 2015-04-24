@@ -75,9 +75,9 @@
 	<h2>sensor data collection - all</h2>
 	<form action="sensorData/all" method="post">
 		deviceSerialNum: <input type="text" name="deviceSerialNum"><br>
-		lylc1humidity1: <input type="text" name="lylc1humidity1"><br>
-		lylc1lightBrightness1: <input type="text" name="lylc1lightBrightness1"><br>
-		lylc1temperatureCel1: <input type="text" name="lylc1temperatureCel1"><br>
+		<!-- lylc1humidity1: <input type="text" name="lylc1humidity1"><br> -->
+		bedroomLight: <input type="text" name="bedroomLight"><br>
+		bedroomTemperature: <input type="text" name="bedroomTemperature"><br>
 		<input type="submit" value="sensor data collection - all">
 	</form>
 	<br><br>

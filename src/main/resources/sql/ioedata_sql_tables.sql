@@ -47,8 +47,24 @@ create table IOESENSORDATA (
 	sensor_serial_num varchar2(100) not null
 );
 
-select to_char(sensor_data_timestamp, 'yyyy/mm/dd HH24:MI:SS') from IOESENSORDATA;
+select num, 
+			sensor_data_serial_num, 
+			sensor_data_value, 
+			ts,
+			sensor_serial_num
+from (
+	select rownum as num,
+			sensor_data_serial_num, 
+			sensor_data_value, 
+			to_char(sensor_data_timestamp, 'yyyy/mm/dd HH24:MI:SS') as ts, 
+			sensor_serial_num 
+	from IOESENSORDATA 
+	order by sensor_data_timestamp desc
+	)
+where num >= 600;
 drop table IOESENSORDATA;
+
+delete from IOESENSORDATA;
 
 -- SEQUENCE sensor data
 create sequence seq_ioesensordata
