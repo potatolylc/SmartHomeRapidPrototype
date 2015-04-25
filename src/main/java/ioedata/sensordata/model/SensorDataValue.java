@@ -98,7 +98,7 @@ public final class SensorDataValue {
 
 	@Override
 	public String toString() {
-		return "DataValue [sensorDataSerialNum=" + sensorDataSerialNum
+		return "SensorDataValue [sensorDataSerialNum=" + sensorDataSerialNum
 				+ ", sensorDataValue=" + sensorDataValue
 				+ ", sensorDataTimestamp=" + sensorDataTimestamp
 				+ ", sensorDataTimestampStr=" + sensorDataTimestampStr

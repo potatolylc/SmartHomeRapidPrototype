@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
+import org.json.JSONException;
 
 import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.SensorNotExistException;
@@ -38,5 +39,5 @@ public interface DataService {
 	 * startTime and endTime.
 	 */
 	public List<SensorDataValue> retrieveData(String sensorSerialNum,
-			String startTime, String endTime) throws SensorNotExistException;
+			String startTime, String endTime) throws SensorNotExistException, JSONException;
 }

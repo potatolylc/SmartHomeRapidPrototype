@@ -95,20 +95,20 @@ public class DataServiceImpl implements DataService {
 			String startTime, String endTime) throws SensorNotExistException {
 		List<SensorDataValue> sensorDataList = null;
 		// check whether sensor exists
-		boolean isSensorExistFlag = this.sensorService
+		/*boolean isSensorExistFlag = this.sensorService
 				.isSensorExist(new ObjectId(sensorSerialNum));
 		if (!isSensorExistFlag)
 			throw new SensorNotExistException();
-		SensorValue sensor = this.sensorService.retrieveSensorInfo(sensorSerialNum);
+		SensorValue sensor = this.sensorService.retrieveSensorInfo(sensorSerialNum);*/
 		sensorDataList = this.dataDao
 				.getDataListBySensorSerialNumAndStartTimeAndEndTime(new SensorDataValue(
 						new SensorValue(sensorSerialNum), new TimeValue(
 								startTime, endTime)));
-		if(sensorDataList != null) {
+		/*if(sensorDataList != null) {
 			for(SensorDataValue data : sensorDataList) {
 				data.setSensorValue(sensor);
 			}
-		}
+		}*/
 		return sensorDataList;
 	}
 }

@@ -1,5 +1,6 @@
 package ioedata.sensordata.controller;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -107,19 +108,26 @@ public class DataController {
 				+ " " + endTime);
 		
 		List<SensorDataValue> sensorDataList = null;
+		List<JSONObject> jsonList = new ArrayList<JSONObject>();
 		try {
 			sensorDataList = this.dataService.retrieveData(sensorSerialNum, startTime, endTime);
 			if(sensorDataList != null) {
-				for(int i = 0; i < sensorDataList.size(); i++) {
-					System.out.println(sensorDataList.get(i));
+				for(SensorDataValue data : sensorDataList) {
+					System.out.println(data);
+					JSONObject jsonObj = new JSONObject();
+					jsonObj.put("sensorDataSerialNum", data.getSensorDataSerialNum());
+					jsonObj.put("sensorDataValue", data.getSensorDataValue());
+					jsonObj.put("sensorDataTimestamp", data.getSensorDataTimestampStr());
+					jsonList.add(jsonObj);
 				}
 			}
+			
 		} catch (SensorNotExistException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(new JSONArray(sensorDataList).toString());
-		return new JSONArray(sensorDataList).toString();
+		System.out.println(new JSONArray(jsonList).toString());
+		return new JSONArray(jsonList).toString();
 	}
 
 	@RequestMapping(value = "/average", method = RequestMethod.GET)
