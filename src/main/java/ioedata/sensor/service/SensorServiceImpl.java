@@ -2,6 +2,7 @@ package ioedata.sensor.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Service;
 /**
  * This class provides services about sensors. It implements SensorService
  * interface.
- * 
+ 
  * @author ajou
  * 
  */
@@ -70,11 +71,13 @@ public class SensorServiceImpl implements SensorService {
 				.getSensorTypeNum(sensorType));
 		sensorVal.setSensorTimestamp(new Date());
 		this.sensorRepository.insertObject(sensorVal);
-		ObjectId sensorSerialNum = this.retrieveSensorSerialNumBySensorNameAndDeviceSerialNum(
-				sensorName, deviceSerialNum);
+		ObjectId sensorSerialNum = this
+				.retrieveSensorSerialNumBySensorNameAndDeviceSerialNum(
+						sensorName, deviceSerialNum);
 		ArrayList<SensorValue> sensors = new ArrayList<SensorValue>();
 		sensors.add(sensorVal);
-		this.deviceService.updateDeviceInfo(new DeviceValue(deviceSerialNum, sensors));
+		this.deviceService.updateDeviceInfo(new DeviceValue(deviceSerialNum,
+				sensors));
 		return sensorSerialNum;
 	}
 
@@ -146,6 +149,11 @@ public class SensorServiceImpl implements SensorService {
 				.retrieveUserSerialNumByUserNameAndSsid(new UserValue(userName,
 						userWifiSsid));
 		return this.retrieveSensorInfo(userSerialNum, deviceName, sensorName);
+	}
+
+	@Override
+	public List<SensorValue> retrieveSensorList(ObjectId deviceSerialNum) {
+		return this.sensorRepository.findByDeviceSerialNum(deviceSerialNum);
 	}
 
 	@Override

@@ -40,6 +40,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by sensor_data_timestamp asc
 	</select>
 	
+	<select id="getAverageDataBySensorSerialNum" parameterType="string" resultType="double">
+	    select avg(sensor_data_value)
+		from IOESENSORDATA
+		where sensor_serial_num = #{sensorSerialNum}
+	</select>
+	
+	<select id="getLatestDataBySensorSerialNum" parameterType="string" resultType="double">
+	    select sensor_data_value
+	    from (
+	    	select rownum as r, sensor_data_value
+	    	from (
+	    		select sensor_data_value from IOESENSORDATA 
+	    		where sensor_serial_num = #{sensorSerialNum}
+	    		order by sensor_data_timestamp desc
+	    	)
+	    )
+	    where r = 1
+	</select>
+	
 	<!-- Get the latest data sorted by time sequence by device ID, despite of a sensor type
 	<select id="getLastDataByDeviceIdSortedByTimestamp" parameterType="string" resultMap="dataRM">
 	    select sensor_data_serial_num, sensor_data_value, 

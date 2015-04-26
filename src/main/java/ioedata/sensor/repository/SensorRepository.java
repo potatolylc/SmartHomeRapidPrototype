@@ -4,6 +4,7 @@ import ioedata.mongodb.repository.BaseRepository;
 import ioedata.sensor.model.SensorValue;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 /**
@@ -19,6 +20,11 @@ public interface SensorRepository<T, ID extends Serializable> extends BaseReposi
 	 * Get sensor information by sensor name and device serial number.
 	 */
 	public SensorValue findBySensorNameAndDeviceSerialNum(String sensorName, ObjectId deviceSerialNum); 
+	
+	/*
+	 * Get list of all sensors by device serial number.
+	 */
+	public List<SensorValue> findByDeviceSerialNum(ObjectId deviceSerialNum);
 	
 	/*
 	 * Overloading isObjectExist method to check whether sensor exists by device serial number and sensor name.

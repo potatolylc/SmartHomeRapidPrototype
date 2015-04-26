@@ -121,6 +121,12 @@ public class SensorController {
 				.put("sensorTypeNum", sensorValRet.getSensorTypeNum())
 				.toString();
 	}
+	
+	@RequestMapping(value = "", method = RequestMethod.DELETE)
+	@ResponseBody
+	public String sensorRemove(@PathVariable("sensorSerialNum") String sensorSerialNum) {
+		return new JSONObject().toString();
+	}
 
 	/*@RequestMapping(value = "/{userSerialNum}/{deviceName}/{sensorName}", method = RequestMethod.GET)
 	@ResponseBody

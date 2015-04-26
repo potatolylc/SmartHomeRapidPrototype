@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public final class SensorDataValue {
 	private int sensorDataSerialNum;
-	private Object sensorDataValue;
+	private double sensorDataValue;
 	private Date sensorDataTimestamp;
 	private String sensorDataTimestampStr;
 	private SensorValue sensorValue;
@@ -24,7 +24,7 @@ public final class SensorDataValue {
 		super();
 	}
 
-	public SensorDataValue(Object sensorDataValue, SensorValue sensorValue) {
+	public SensorDataValue(double sensorDataValue, SensorValue sensorValue) {
 		super();
 		this.sensorDataValue = sensorDataValue;
 		this.sensorValue = sensorValue;
@@ -36,7 +36,7 @@ public final class SensorDataValue {
 		this.timeValue = timeValue;
 	}
 
-	public SensorDataValue(int sensorDataSerialNum, Object sensorDataValue,
+	public SensorDataValue(int sensorDataSerialNum, double sensorDataValue,
 			Date sensorDataTimestamp, String sensorDataTimestampStr,
 			SensorValue sensorValue, TimeValue timeValue) {
 		super();
@@ -56,11 +56,11 @@ public final class SensorDataValue {
 		this.sensorDataSerialNum = sensorDataSerialNum;
 	}
 
-	public Object getSensorDataValue() {
+	public double getSensorDataValue() {
 		return sensorDataValue;
 	}
 
-	public void setSensorDataValue(Object sensorDataValue) {
+	public void setSensorDataValue(double sensorDataValue) {
 		this.sensorDataValue = sensorDataValue;
 	}
 

@@ -3,12 +3,14 @@ package ioedata.sensordata.service;
 import ioedata.device.service.DeviceService;
 import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.SensorNotExistException;
+import ioedata.sensor.factory.SensorManager;
 import ioedata.sensor.model.SensorValue;
 import ioedata.sensor.service.SensorService;
 import ioedata.sensordata.model.SensorDataValue;
 import ioedata.sensordata.model.TimeValue;
 import ioedata.sensordata.repository.DataDao;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.bson.types.ObjectId;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 /**
@@ -61,7 +65,7 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public boolean storeSensorData(ObjectId deviceSerialNum,
-			Map<String, Object> sensorDataPairs)
+			Map<String, Double> sensorDataPairs)
 			throws DeviceNotExistException, SensorNotExistException {
 		// Check whether device exists
 		boolean isDeviceExistFlag = this.deviceService
@@ -95,20 +99,61 @@ public class DataServiceImpl implements DataService {
 			String startTime, String endTime) throws SensorNotExistException {
 		List<SensorDataValue> sensorDataList = null;
 		// check whether sensor exists
-		/*boolean isSensorExistFlag = this.sensorService
-				.isSensorExist(new ObjectId(sensorSerialNum));
-		if (!isSensorExistFlag)
-			throw new SensorNotExistException();
-		SensorValue sensor = this.sensorService.retrieveSensorInfo(sensorSerialNum);*/
+		/*
+		 * boolean isSensorExistFlag = this.sensorService .isSensorExist(new
+		 * ObjectId(sensorSerialNum)); if (!isSensorExistFlag) throw new
+		 * SensorNotExistException(); SensorValue sensor =
+		 * this.sensorService.retrieveSensorInfo(sensorSerialNum);
+		 */
 		sensorDataList = this.dataDao
 				.getDataListBySensorSerialNumAndStartTimeAndEndTime(new SensorDataValue(
 						new SensorValue(sensorSerialNum), new TimeValue(
 								startTime, endTime)));
-		/*if(sensorDataList != null) {
-			for(SensorDataValue data : sensorDataList) {
-				data.setSensorValue(sensor);
-			}
-		}*/
+		/*
+		 * if(sensorDataList != null) { for(SensorDataValue data :
+		 * sensorDataList) { data.setSensorValue(sensor); } }
+		 */
 		return sensorDataList;
+	}
+
+	@Override
+	public double retrieveAverageData(String sensorSerialNum) {
+		return this.dataDao.getAverageDataBySensorSerialNum(sensorSerialNum);
+	}
+
+	@Override
+	public double retrieveLatestData(String sensorSerialNum) {
+		return this.dataDao.getLatestDataBySensorSerialNum(sensorSerialNum);
+	}
+
+	@Override
+	public List<JSONObject> retrieveLatestDataSet(String deviceSerialNum)
+			throws DeviceNotExistException, JSONException {
+		List<JSONObject> jsonObjList = new ArrayList<JSONObject>();
+		// check whether device exists
+		boolean isDeviceExistFlag = this.deviceService
+				.isDeviceExist(deviceSerialNum);
+		if (!isDeviceExistFlag)
+			throw new DeviceNotExistException();
+
+		// get all sensors attached to the device
+		List<SensorValue> sensorList = this.sensorService
+				.retrieveSensorList(new ObjectId(deviceSerialNum));
+		if (sensorList != null) {
+			// for each sensor, get the latest sensor data
+			for (SensorValue sensor : sensorList) {
+				JSONObject jsonObj = new JSONObject();
+				double sensorVal = this.dataDao
+						.getLatestDataBySensorSerialNum(sensor
+								.getSensorSerialNum().toString());
+				jsonObj.put("sensorSerialNum", sensor.getSensorSerialNum());
+				jsonObj.put("sensorName", sensor.getSensorName());
+				jsonObj.put("sensorType", SensorManager.getSensorManager()
+						.getSensorType(sensor.getSensorTypeNum()));
+				jsonObj.put("sensorDataValue", sensorVal);
+				jsonObjList.add(jsonObj);
+			}
+		}
+		return jsonObjList;
 	}
 }

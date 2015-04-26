@@ -17,36 +17,18 @@ public interface DataDao {
 	 */
 	public int insertSensorData(SensorDataValue dataVal);
 	
+	/*
+	 * Get data list of a specific sensor from the start time to the end time.
+	 */
 	public List<SensorDataValue> getDataListBySensorSerialNumAndStartTimeAndEndTime(SensorDataValue sensorVal);
 
 	/*
-	 * Get the latest data of a specific device despite of sensor data type.
+	 * Get average data value using sensor serial number.
 	 */
-	public SensorDataValue getLastDataByDeviceIdSortedByTimestamp(
-			String deviceId) throws Exception;
-
+	public double getAverageDataBySensorSerialNum(String sensorSerialNum);
+	
 	/*
-	 * Get the latest data of a specific device and a sensor data type.
+	 * Get average data value using sensor serial number.
 	 */
-	public SensorDataValue getLastDataByDeviceIdAndSensorTypeSortedByTimestamp(
-			SensorValue sensorVal) throws Exception;
-
-	/*
-	 * Get the data information list from database that is between a specific
-	 * time interval.
-	 */
-	public List<SensorDataValue> getDataListByDeviceIdAndSensorTypeAndDateSortedByTimestamp(
-			SensorDataValue dataVal) throws Exception;
-
-	/*
-	 * Get the greatest data value of a specific sensor type.
-	 */
-	public SensorDataValue getGreatestDataByDeviceIdAndSensorType(
-			SensorValue sensorVal) throws Exception;
-
-	/*
-	 * Get the least data value of a specific sensor type.
-	 */
-	public SensorDataValue getLeastDataByDeviceIdAndSensorType(
-			SensorValue sensorVal) throws Exception;
+	public double getLatestDataBySensorSerialNum(String sensorSerialNum);	
 }

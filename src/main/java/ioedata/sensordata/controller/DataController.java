@@ -75,14 +75,14 @@ public class DataController {
 		System.out.println("collectData all: " + deviceSerialNum);
 		boolean flag = false;
 		String msg = null;
-		Map<String, Object> sensorDataPairs = new HashMap<String, Object>();
+		Map<String, Double> sensorDataPairs = new HashMap<String, Double>();
 		Enumeration<String> requestParams = request.getParameterNames();
 		while (requestParams.hasMoreElements()) {
 			String requestParam = requestParams.nextElement();
 			if (requestParam.equals("deviceSerialNum"))
 				continue;
 			String paramVal = request.getParameter(requestParam);
-			sensorDataPairs.put(requestParam, paramVal);
+			sensorDataPairs.put(requestParam, Double.parseDouble(paramVal));
 		}
 		try {
 			flag = this.dataService.storeSensorData(deviceSerialNum,
@@ -131,9 +131,35 @@ public class DataController {
 	}
 
 	@RequestMapping(value = "/average", method = RequestMethod.GET)
-	public String retrieveAverageData(
-			@RequestParam("sensorSerialNum") String sensorSerialNum) {
-		System.out.println("retrieveAverageData: " + sensorSerialNum);
-		return new JSONObject().toString();
+	@ResponseBody
+	public String averageData(
+			@RequestParam("sensorSerialNum") String sensorSerialNum) throws JSONException {
+		System.out.println("averageData: " + sensorSerialNum);
+		double averageVal = this.dataService.retrieveAverageData(sensorSerialNum);
+		return new JSONObject().put("avarageSensorDataValue", averageVal).toString();
+	}
+	
+	@RequestMapping(value = "/latest", method = RequestMethod.GET)
+	@ResponseBody
+	public String latestData(
+			@RequestParam("sensorSerialNum") String sensorSerialNum) throws JSONException {
+		System.out.println("latestData: " + sensorSerialNum);
+		double latestVal = this.dataService.retrieveLatestData(sensorSerialNum);
+		return new JSONObject().put("latestSensorDataValue", latestVal).toString();
+	}
+	
+	@RequestMapping(value = "/all/latest", method = RequestMethod.GET)
+	@ResponseBody
+	public String latestDataSet(
+			@RequestParam("deviceSerialNum") String deviceSerialNum) throws JSONException {
+		System.out.println("latestDataSet: " + deviceSerialNum);
+		List<JSONObject> jsonObjList = null;
+		try {
+			jsonObjList = this.dataService.retrieveLatestDataSet(deviceSerialNum);
+		} catch (DeviceNotExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new JSONArray(jsonObjList).toString();
 	}
 }

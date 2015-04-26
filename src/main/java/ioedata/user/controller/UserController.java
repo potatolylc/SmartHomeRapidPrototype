@@ -6,6 +6,7 @@ import ioedata.exception.factory.UserDuplicateException;
 import ioedata.exception.factory.UserNotExistException;
 import ioedata.user.model.UserValue;
 import ioedata.user.service.UserService;
+import ioedata.utils.DateFormatConverter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,7 +83,8 @@ public class UserController {
 	@RequestMapping(value = "/{userSerialNum}", method = RequestMethod.GET)
 	@ResponseBody
 	public String userInformation(
-			@PathVariable("userSerialNum") int userSerialNum) throws JSONException {
+			@PathVariable("userSerialNum") int userSerialNum)
+			throws JSONException {
 		System.out.println("userInformation: " + userSerialNum);
 		UserValue userValRet = null;
 		boolean flag = false;
@@ -94,11 +96,16 @@ public class UserController {
 			e.printStackTrace();
 			return new JSONObject().put("result", flag).toString();
 		}
-		return new JSONObject().put("result", flag)
+		return new JSONObject()
+				.put("result", flag)
 				.put("userSerialNum", userValRet.getUserSerialNum())
 				.put("userName", userValRet.getUserName())
 				.put("userWifiSsid", userValRet.getUserWifiSsid())
-				.put("userTimestamp", userValRet.getUserTimestamp()).toString();
+				.put("userTimestamp",
+						DateFormatConverter.getConvert()
+								.englishLocaleToStandard(
+										userValRet.getUserTimestamp().toString()))
+				.toString();
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -118,10 +125,29 @@ public class UserController {
 			e.printStackTrace();
 			return new JSONObject().put("result", flag).toString();
 		}
-		return new JSONObject().put("result", flag)
+		return new JSONObject()
+				.put("result", flag)
 				.put("userSerialNum", userValRet.getUserSerialNum())
 				.put("userName", userValRet.getUserName())
 				.put("userWifiSsid", userValRet.getUserWifiSsid())
-				.put("userTimestamp", userValRet.getUserTimestamp()).toString();
+				.put("userTimestamp",
+						DateFormatConverter.getConvert()
+								.englishLocaleToStandard(
+										userValRet.getUserTimestamp().toString()))
+				.toString();
+	}
+
+	@RequestMapping(value = "/{userSerialNum}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public String userRemove(@PathVariable("userSerialNum") int userSerialNum) {
+		System.out.println("userRemove: " + userSerialNum);
+		return new JSONObject().toString();
+	}
+
+	@RequestMapping(value = "", method = RequestMethod.DELETE)
+	@ResponseBody
+	public String userRemove(@RequestParam("userName") String userName,
+			@RequestParam("userWifiSsid") String userWifiSsid) {
+		return new JSONObject().toString();
 	}
 }

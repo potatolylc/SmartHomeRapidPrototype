@@ -37,41 +37,14 @@ public class DataDaoImpl implements DataDao {
 	}
 
 	@Override
-	public SensorDataValue getLastDataByDeviceIdSortedByTimestamp(
-			String deviceId) throws Exception {
-		return this.template.selectOne(
-				"data.getLastDataByDeviceIdSortedByTimestamp", deviceId);
+	public double getAverageDataBySensorSerialNum(String sensorSerialNum) {
+		return this.template.selectOne("sensordata.getAverageDataBySensorSerialNum", sensorSerialNum);
 	}
 
 	@Override
-	public SensorDataValue getLastDataByDeviceIdAndSensorTypeSortedByTimestamp(
-			SensorValue sensorVal) throws Exception {
-		return this.template.selectOne(
-				"data.getLastDataByDeviceIdAndSensorTypeSortedByTimestamp",
-				sensorVal);
+	public double getLatestDataBySensorSerialNum(String sensorSerialNum) {
+		return this.template.selectOne("sensordata.getLatestDataBySensorSerialNum", sensorSerialNum);
 	}
 
-	@Override
-	public List<SensorDataValue> getDataListByDeviceIdAndSensorTypeAndDateSortedByTimestamp(
-			SensorDataValue dataVal) throws Exception {
-		return this.template
-				.selectList(
-						"data.getDataListByDeviceIdAndSensorTypeAndDateSortedByTimestamp",
-						dataVal);
-	}
-
-	@Override
-	public SensorDataValue getGreatestDataByDeviceIdAndSensorType(
-			SensorValue sensorVal) throws Exception {
-		return this.template.selectOne(
-				"data.getGreatestDataByDeviceIdAndSensorType", sensorVal);
-	}
-
-	@Override
-	public SensorDataValue getLeastDataByDeviceIdAndSensorType(
-			SensorValue sensorVal) throws Exception {
-		return this.template.selectOne(
-				"data.getLeastDataByDeviceIdAndSensorType", sensorVal);
-	}
 
 }

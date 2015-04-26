@@ -76,4 +76,10 @@ public class SensorRepositoryImpl implements
 						.and("deviceSerialNum").is(deviceSerialNum)),
 				SensorValue.class);
 	}
+
+	@Override
+	public List<SensorValue> findByDeviceSerialNum(ObjectId deviceSerialNum) {
+		return this.template.find(new Query(Criteria.where("deviceSerialNum")
+				.is(deviceSerialNum)), SensorValue.class);
+	}
 }

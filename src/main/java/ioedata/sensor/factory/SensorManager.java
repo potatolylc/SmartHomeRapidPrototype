@@ -102,5 +102,59 @@ public final class SensorManager {
 		}
 		return sensorTypeNum;
 	}
+	
+	/*
+	 * Get sensor type by sensor type number.
+	 */
+	public String getSensorType(int sensorTypeNum) {
+		String sensorType = null;
+		switch (sensorTypeNum) {
+		case Sensor.TYPE_ANALOG_SOUND:
+			sensorType = "analogSound";
+			break;
+		case Sensor.TYPE_DUST:
+			sensorType = "dust"; 
+			break;
+		case Sensor.TYPE_FLAME:
+			sensorType = "flame";
+			break;
+		case Sensor.TYPE_HUMIDITY:
+			sensorType = "humidity";
+			break;
+		case Sensor.TYPE_LIGHT_BRIGHTNESS:
+			sensorType = "lightBrightness";
+			break;
+		case Sensor.TYPE_RAINDROP:
+			sensorType = "raindrop";
+			break;
+		case Sensor.TYPE_TEMPERATURE_CELSIUS:
+			sensorType = "temperatureCel";
+			break;
+		case Sensor.TYPE_TEMPERATURE_FAHRENHEIT:
+			sensorType = "temperatureFah";
+			break;
+		case Sensor.TYPE_ACCELEROMETER:
+			sensorType = "accelerometer";
+			break;
+		case Sensor.TYPE_DIGITAL_TILT:
+			sensorType = "digitalTilt";
+			break;
+		case Sensor.TYPE_DIGITAL_VIBRATION:
+			sensorType = "digitalVibration";
+			break;
+		case Sensor.TYPE_INFRARED_MOTION:
+			sensorType = "infraredMotion";
+			break;
+		case Sensor.TYPE_TOUCH:
+			sensorType = "touch";
+			break;
+		case Sensor.TYPE_PRESSURE:
+			sensorType = "pressure";
+			break;
+		default:
+			break;
+		}
+		return sensorType;
+	}
 
 }

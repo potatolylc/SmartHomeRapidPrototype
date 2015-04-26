@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.SensorNotExistException;
@@ -31,7 +32,7 @@ public interface DataService {
 	 * sensor-sensor data key-value pairs.
 	 */
 	public boolean storeSensorData(ObjectId deviceSerialNum,
-			Map<String, Object> sensorDataPairs)
+			Map<String, Double> sensorDataPairs)
 			throws DeviceNotExistException, SensorNotExistException;
 
 	/*
@@ -40,4 +41,19 @@ public interface DataService {
 	 */
 	public List<SensorDataValue> retrieveData(String sensorSerialNum,
 			String startTime, String endTime) throws SensorNotExistException, JSONException;
+	
+	/*
+	 * Retrieve the average data value of a specific sensor.
+	 */
+	public double retrieveAverageData(String sensorSerialNum);
+	
+	/*
+	 * Retrieve the latest data value of a specific sensor.
+	 */
+	public double retrieveLatestData(String sensorSerialNum);
+	
+	/*
+	 * Retrieve the list of data value and sensor info bundles  of a specific device.
+	 */
+	public List<JSONObject> retrieveLatestDataSet(String deviceSerialNum) throws DeviceNotExistException, JSONException;
 }
