@@ -82,7 +82,7 @@
 	</form>
 	<br><br>
 	<h2>location</h2>
-	<form action="location/push" method="post">
+	<form action="location" method="post">
 		userName: <input type="text" name="userName"><br>
 		userWifiSsid: <input type="text" name="userWifiSsid"><br>
 		longitude: <input type="text" name="longitude">
@@ -91,7 +91,7 @@
 	</form>
 	<br><br>
 	<h2>weather</h2>
-	<form action="weather/push" method="post">
+	<form action="weather" method="post">
 		userName: <input type="text" name="userName"><br>
 		userWifiSsid: <input type="text" name="userWifiSsid"><br>
 		temperature: <input type="text" name="temperatureCel">

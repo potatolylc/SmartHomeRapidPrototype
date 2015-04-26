@@ -19,7 +19,7 @@ from (
 	from (
 		select sensor_data_serial_num, sensor_data_value, to_char(sensor_data_timestamp, 'YYYY/MM/DD HH24:MI:SS') as t
 		from IOESENSORDATA
-		where sensor_serial_num = '5538ae605ace012fc8c64f8b'
+		where sensor_serial_num = '5538ae965ace012fc8c64f8d'
 		order by sensor_data_timestamp desc
 	)
 )

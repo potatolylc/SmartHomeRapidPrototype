@@ -35,7 +35,7 @@ public class WeatherController {
 	public String weatherLog(HttpServletRequest request,
 				@RequestParam("userName") String userName,
 				@RequestParam("userWifiSsid") String userWifiSsid) throws JSONException {
-		System.out.println("locationLog: " + userName + " " + userWifiSsid);
+		System.out.println("weatherLog: " + userName + " " + userWifiSsid);
 		boolean flag = false;
 		String msg = "Weather information pushed.";
 		Map<String, Object> dataPairs = new HashMap<String, Object>();
