@@ -7,6 +7,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>MavenIoEData Maven Webapp</name>
 	<url>http://maven.apache.org</url>
+	
+	<!-- <parent>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-parent</artifactId>
+	    <version>1.2.3.RELEASE</version>
+	</parent> -->
 
 	<!-- Properties of the project -->
 	<properties>
@@ -25,20 +31,28 @@
 		<commons.dbcp.version>1.4</commons.dbcp.version>
 		<!-- Json version -->
 		<json.version>20090211</json.version>
+		<!-- Jackson version -->
+		<jackson.version>2.3.0</jackson.version>
 		<!-- junit version -->
 		<junit.version>3.8.1</junit.version>
 		<!-- javax servlet version -->
-		<javax.servlet.version>3.0.1</javax.servlet.version>
+		<javax.servlet.version>3.1.0</javax.servlet.version>
 		<!-- Spring Framework Data version -->
 		<spring.data.version>1.6.2.RELEASE</spring.data.version>
 		<!-- Spring Integration version -->
 		<spring.integration.version>4.1.2.RELEASE</spring.integration.version>
+		<!-- Spring messaging version -->
+		<spring.messaging.version>4.0.1.RELEASE</spring.messaging.version>
+		<!-- Spring websocket version -->
+		<spring.websocket.version>4.0.1.RELEASE</spring.websocket.version>
 		<!-- Californium Framework version -->
 		<californium.core.version>1.0.0-SNAPSHOT</californium.core.version>
 		<!-- jose4j version -->
 		<jose4j.version>0.4.1</jose4j.version>
 		<!-- Tomcat Maven version -->
 		<tomcat.maven.version>2.1</tomcat.maven.version>
+		<!-- Tomcat embed version -->
+		<tomcat.embed.websocket.version>7.0.52</tomcat.embed.websocket.version>
 		<!-- Maven Compiler Plugin version -->
 		<maven.compiler.plugin.version>3.0</maven.compiler.plugin.version>
 		<!-- MQTT client version -->
@@ -93,6 +107,18 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${spring.websocket.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-messaging</artifactId>
+		    <version>${spring.messaging.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>commons-pool</groupId>
@@ -122,6 +148,18 @@
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>${json.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>${jackson.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>${jackson.version}</version>
 		</dependency>
 
 		<!-- <dependency>
@@ -172,6 +210,12 @@
 		    <groupId>org.slf4j</groupId>
 		    <artifactId>slf4j-log4j12</artifactId>
 		    <version>${log4j.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.tomcat.embed</groupId>
+		    <artifactId>tomcat-embed-websocket</artifactId>
+		    <version>${tomcat.embed.websocket.version}</version>
 		</dependency>
 
 	</dependencies>

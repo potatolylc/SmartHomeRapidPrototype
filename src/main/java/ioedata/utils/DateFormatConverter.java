@@ -18,7 +18,7 @@ public class DateFormatConverter {
 	
 	public static String englishLocaleToStandard(String oldDate) {
 		String newDate = null;
-		DateFormat englishLocaleFormat = new SimpleDateFormat("EEE MMM DD HH:mm:ss zzz yyyy");
+		DateFormat englishLocaleFormat = new SimpleDateFormat("EEE MMM DD HH:mm:ss zzz yyyy", Locale.ENGLISH);
 		Date date = null;
 		try {
 			date = englishLocaleFormat.parse(oldDate);
@@ -32,7 +32,7 @@ public class DateFormatConverter {
 	
 	public static String englishLocaleToStandard(Date oldDate) {
 		String newDate = null;
-		DateFormat standardFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss");
+		DateFormat standardFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss", Locale.KOREA);
 		newDate = standardFormat.format(oldDate);
 		return newDate;
 	}
