@@ -26,7 +26,7 @@
 	}
 
 	function connect() {
-		var socket = new SockJS('http://127.0.0.1:8888/MavenIoEData/portfolio');
+		var socket = new SockJS('http://192.168.0.11:8888/MavenIoEData/portfolio');
 		stompClient = Stomp.over(socket);
 		/* stompClient.debug = function(str) {
 			alert(str);
