@@ -30,7 +30,7 @@ public class SocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		// TODO Auto-generated method stub
-		registry.addEndpoint("/hello").withSockJS();
+		registry.addEndpoint("/socket").withSockJS();
 		System.out.println("registerStompEndpoints...");
 	}
 

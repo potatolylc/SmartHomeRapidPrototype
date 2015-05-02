@@ -26,7 +26,7 @@
 	}
 
 	function connect() {
-		var socket = new SockJS('http://localhost:8888/MavenIoEData/hello');
+		var socket = new SockJS('http://localhost:8888/MavenIoEData/socket');
 		stompClient = Stomp.over(socket);
 		/* stompClient.debug = function(str) {
 			alert(str);
@@ -35,8 +35,8 @@
 			//alert(frame);
 			setConnected(true);
 			console.log('Connected: ' + frame);
-			stompClient.subscribe('/topic/greetings', function(greeting) {
-				alert(123);
+			stompClient.subscribe('/topic/greeting', function(greeting) {
+				alert(JSON.parse(greeting.body));
 				showGreeting(JSON.parse(greeting.body).content);
 			});
 		});
