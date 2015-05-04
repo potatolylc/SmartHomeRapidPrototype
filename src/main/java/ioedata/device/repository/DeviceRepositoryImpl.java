@@ -91,7 +91,7 @@ public class DeviceRepositoryImpl implements
 		Point point = new Point(geoCoordinate.getLongitude(),
 				geoCoordinate.getLatitude());
 		return this.template.find(new Query(Criteria.where("geoCoordinate")
-				.near(point).maxDistance(distance)).limit(10), DeviceValue.class);
+				.nearSphere(point).maxDistance(distance)), DeviceValue.class);
 	}
 
 }

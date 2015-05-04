@@ -1,6 +1,6 @@
 package ioedata.analysis.controller;
 
-import ioedata.analysis.service.ID3Algorithm;
+import ioedata.analysis.utils.ID3Algorithm;
 
 import java.io.File;
 import java.util.ArrayList;

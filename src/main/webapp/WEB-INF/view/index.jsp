@@ -26,7 +26,7 @@
 	}
 
 	function connect() {
-		var socket = new SockJS('http://localhost:8888/MavenIoEData/socket');
+		var socket = new SockJS('http://localhost:8888/MavenIoEData/webSocket');
 		stompClient = Stomp.over(socket);
 		/* stompClient.debug = function(str) {
 			alert(str);
@@ -35,7 +35,7 @@
 			//alert(frame);
 			setConnected(true);
 			console.log('Connected: ' + frame);
-			stompClient.subscribe('/topic/greeting', function(greeting) {
+			stompClient.subscribe('/queue/isNearHome', function(greeting) {
 				alert(JSON.parse(greeting.body));
 				showGreeting(JSON.parse(greeting.body).content);
 			});
@@ -51,9 +51,15 @@
 	}
 
 	function sendName() {
-		var name = document.getElementById('name').value;
-		stompClient.send("/app/hello", {}, JSON.stringify({
-			'name' : name
+		var longitude = document.getElementById('longitude').value;
+		var latitude = document.getElementById('latitude').value;
+		var userSerialNum = document.getElementById('userSerialNum').value;
+		stompClient.send("/app/geoCoordinate", {}, JSON.stringify({
+			'geoCoordinate' : {
+				'longitude' : longitude,
+				'latitude' : latitude
+			},
+			'userSerialNum' : userSerialNum
 		}));
 	}
 
@@ -80,7 +86,10 @@
 			<button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
 		</div>
 		<div id="conversationDiv">
-			<label>What is your name?</label><input type="text" id="name" />
+			<label>What is your name?</label>
+			<input type="text" id="longitude" /><br>
+			<input type="text" id="latitude" /><br>
+			<input type="text" id="userSerialNum" />
 			<button id="sendName" onclick="sendName();">Send</button>
 			<p id="response"></p>
 		</div>

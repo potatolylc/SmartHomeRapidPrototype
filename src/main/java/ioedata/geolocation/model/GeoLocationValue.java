@@ -6,44 +6,45 @@ import ioedata.mongodb.repository.DBUtils;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = DBUtils.GEO_LOCATION_COLLECTION_NAME)
 public class GeoLocationValue {
 	@Id
 	private ObjectId geoSerialNum;
-	private double longitude;
-	private double latitude;
+	@Indexed
+	private GeoCoordinate geoCoordinate;
 	private Date geoTimestamp;
 	private int userSerialNum;
-	
+
 	public GeoLocationValue() {
 		super();
 	}
-	
-	public GeoLocationValue(double longitude, double latitude) {
+
+	public GeoLocationValue(GeoCoordinate geoCoordinate, Date geoTimestamp,
+			int userSerialNum) {
 		super();
-		this.longitude = longitude;
-		this.latitude = latitude;
+		this.geoCoordinate = geoCoordinate;
+		this.geoTimestamp = geoTimestamp;
+		this.userSerialNum = userSerialNum;
 	}
 
-	public GeoLocationValue(double longitude, double latitude,
+	public GeoLocationValue(ObjectId geoSerialNum, GeoCoordinate geoCoordinate,
 			Date geoTimestamp, int userSerialNum) {
 		super();
-		this.longitude = longitude;
-		this.latitude = latitude;
+		this.geoSerialNum = geoSerialNum;
+		this.geoCoordinate = geoCoordinate;
 		this.geoTimestamp = geoTimestamp;
 		this.userSerialNum = userSerialNum;
 	}
 
-	public GeoLocationValue(ObjectId geoSerialNum, double longitude,
-			double latitude, Date geoTimestamp, int userSerialNum) {
-		super();
-		this.geoSerialNum = geoSerialNum;
-		this.longitude = longitude;
-		this.latitude = latitude;
-		this.geoTimestamp = geoTimestamp;
-		this.userSerialNum = userSerialNum;
+	public GeoCoordinate getGeoCoordinate() {
+		return geoCoordinate;
+	}
+
+	public void setGeoCoordinate(GeoCoordinate geoCoordinate) {
+		this.geoCoordinate = geoCoordinate;
 	}
 
 	public ObjectId getGeoSerialNum() {
@@ -52,22 +53,6 @@ public class GeoLocationValue {
 
 	public void setGeoSerialNum(ObjectId geoSerialNum) {
 		this.geoSerialNum = geoSerialNum;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
-	public double getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
 	}
 
 	public Date getGeoTimestamp() {
@@ -89,8 +74,8 @@ public class GeoLocationValue {
 	@Override
 	public String toString() {
 		return "GeoLocationValue [geoSerialNum=" + geoSerialNum
-				+ ", longitude=" + longitude + ", latitude=" + latitude
-				+ ", geoTimestamp=" + geoTimestamp + ", userSerialNum="
-				+ userSerialNum + "]";
+				+ ", geoCoordinate=" + geoCoordinate + ", geoTimestamp="
+				+ geoTimestamp + ", userSerialNum=" + userSerialNum + "]";
 	}
+
 }
