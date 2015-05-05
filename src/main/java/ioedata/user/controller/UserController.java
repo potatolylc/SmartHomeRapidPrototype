@@ -104,8 +104,8 @@ public class UserController {
 				.put("userTimestamp",
 						DateFormatConverter.getConvert()
 								.englishLocaleToStandard(
-										userValRet.getUserTimestamp().toString()))
-				.toString();
+										userValRet.getUserTimestamp()
+												.toString())).toString();
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -133,8 +133,8 @@ public class UserController {
 				.put("userTimestamp",
 						DateFormatConverter.getConvert()
 								.englishLocaleToStandard(
-										userValRet.getUserTimestamp().toString()))
-				.toString();
+										userValRet.getUserTimestamp()
+												.toString())).toString();
 	}
 
 	@RequestMapping(value = "/{userSerialNum}", method = RequestMethod.DELETE)

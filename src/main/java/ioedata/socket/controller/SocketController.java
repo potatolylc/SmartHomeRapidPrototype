@@ -38,5 +38,4 @@ public class SocketController {
 					.convertAndSend("/queue/isNearHome", "push");
 		}
 	}
-
 }

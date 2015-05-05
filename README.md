@@ -7,4 +7,4 @@
 
 
 
-##### The open REST API can be referenced [here](https://github.com/potatolylc/SmartHomeRapidPrototype/wiki/Open-RESTful-API) .
+#### The open REST API can be referenced [here](https://github.com/potatolylc/SmartHomeRapidPrototype/wiki/Open-RESTful-API) .

@@ -17,7 +17,7 @@ public class AnalysisServiceImpl implements AnalysisService {
 
 	@Override
 	public boolean isUserNearHome(GeoCoordinate geoCoordinate, int userSerialNum) {
-		List<DeviceValue> deviceList = this.deviceService.retrieveDeviceListWithinCircle(geoCoordinate, 1000);
+		List<DeviceValue> deviceList = this.deviceService.retrieveDeviceListWithinCircle(geoCoordinate, 1);
 		for(DeviceValue device : deviceList) {
 			System.out.println(device);
 		}
