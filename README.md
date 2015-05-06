@@ -75,36 +75,45 @@ Code for configuring WebSocket in Spring server can be referred to [here](https:
 
 Java Library of STOMP client for Android mobile application can be found [here](https://github.com/potatolylc)
 
-	`public void androidStompClientConnection() {`
+	`public void androidStompClientConnection() {
 	
-		`Map<String, String> headers = new HashMap<String, String>();`
+		Map<String, String> headers = new HashMap<String, String>();
 
-		`Stomp stompClient = new Stomp("ws://[host]:[port_number]/[service_name]/socket", headers, new ListenerWSNetwork() {`
+		Stomp stompClient = new Stomp("ws://[host]:[port_number]/[service_name]/socket", headers, new ListenerWSNetwork() {
 
 		......
 
-		`});`
+		});
 		
-		`androidStompClient.connect();`
+		androidStompClient.connect();
 
-		`androidStompClient.subscribe(new Subscription(...), new ListenerSubscription() {`
+		androidStompClient.subscribe(new Subscription(...), new ListenerSubscription() {
 
 			......
 
-		`}));`
+		}));
 
 
-	`}`	
+	}`	
 
 + **Javascript**
 Javascript Library of STOMP client for Web browser can be found [here](https://github.com/potatolylc)
-	`function jsStompClientConnection() {`
-		`var socket = new SockJS("http://"[host]:[port_number]/[service_name]/webSocket");`
-		`var jsStompClient = Stomp.over(socket);`
-		`jsStompClient.connect({}, function(frame) {`
+	`function jsStompClientConnection() {
+
+		var socket = new SockJS("http://"[host]:[port_number]/[service_name]/webSocket");
+
+		var jsStompClient = Stomp.over(socket);
+
+		jsStompClient.connect({}, function(frame) {
+
 			......
-			`jsStompClient.subscribe(..., function(message) {`
+
+			jsStompClient.subscribe(..., function(message) {
+
 				......
-			`}`
-		`}`
-	`}`
+
+			}
+
+		}
+
+	}`
