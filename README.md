@@ -9,17 +9,17 @@ The prototype provides a basic backend server framework for managing smart home 
 
 
 ### Required Tools
-#### Java Development Kit (JDK) (version 1.7+ required)
+* Java Development Kit (JDK) (version 1.7+ required)
 
-#### Apache Tomcat (version 7.0+ required)
+* Apache Tomcat (version 7.0+ required)
 
-#### Oracle Database Express Edition 11g Release (required)
+* Oracle Database Express Edition 11g Release (required)
 
-#### MongoDB (version 2.6)
+* MongoDB (version 2.6)
 
-#### Apache Maven (version 3.2)
+* Apache Maven (version 3.2)
 
-#### Git (version 1.9)
+* Git (version 1.9)
 
 
 
@@ -37,6 +37,6 @@ The open REST API can be referenced [here](https://github.com/potatolylc/SmartHo
 
 
 ### Code Excerpts of STOMP Client
-#### Android Mobile Application
+* Android Mobile Application
 
-#### Javascript
+* Javascript
