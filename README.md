@@ -38,13 +38,13 @@ The prototype provides a basic backend server framework for managing smart home 
 
 + Now get the Open-source Rapid Prototype source code from Github.
 
-	`git init
+	git init
 
-	git pull https://github.com/potatolylc/SmartHomeRapidPrototype`
+	git pull https://github.com/potatolylc/SmartHomeRapidPrototype
 
 + Build project with Maven in the project folder
 
-	`mvn clean install`
+	mvn clean install
 
 + Start Tomcat server and get the index page, then you got it~
 
@@ -71,7 +71,7 @@ In this middleware, STOMP over WebSocket protocol was utilized for push services
 
 Code for configuring WebSocket in Spring server can be referred to [here](https://github.com/potatolylc/SmartHomeRapidPrototype/blob/master/src/main/java/ioedata/socket/config/SocketConfig.java)
 
-	`@Override
+	@Override
 
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 
@@ -79,13 +79,13 @@ Code for configuring WebSocket in Spring server can be referred to [here](https:
 
 		registry.addEndpoint("/webSocket").withSockJS();
 
-	}`
+	}
 
 + **Android Mobile Application**
 
 Java Library of STOMP client for Android mobile application can be found [here](https://github.com/potatolylc)
 
-	`public void androidStompClientConnection() {
+	public void androidStompClientConnection() {
 	
 		Map<String, String> headers = new HashMap<String, String>();
 
@@ -103,13 +103,13 @@ Java Library of STOMP client for Android mobile application can be found [here](
 
 		}));
 
-	}`	
+	}	
 
 + **Javascript**
 
 Javascript Library of STOMP client for Web browser can be found [here](https://github.com/potatolylc)
 
-	`function jsStompClientConnection() {
+	function jsStompClientConnection() {
 
 		var socket = new SockJS("http://"[host]:[port_number]/[service_name]/webSocket");
 
@@ -127,4 +127,4 @@ Javascript Library of STOMP client for Web browser can be found [here](https://g
 
 		}
 
-	}`
+	}
