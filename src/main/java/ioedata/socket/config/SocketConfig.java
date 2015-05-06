@@ -19,17 +19,14 @@ public class SocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		// TODO Auto-generated method stub
 		super.configureMessageBroker(registry);
 		registry.enableSimpleBroker("/queue/", "/topic/");
 		registry.setApplicationDestinationPrefixes("/app");
-		//registry.setUserDestinationPrefix("/user");
 		System.out.println("configureMessageBroker...");
 	}
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		// TODO Auto-generated method stub
 		registry.addEndpoint("/socket");
 		registry.addEndpoint("/webSocket").withSockJS();
 		System.out.println("registerStompEndpoints...");

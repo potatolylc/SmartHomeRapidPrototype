@@ -33,6 +33,11 @@ The open REST API can be referenced [here](https://github.com/potatolylc/SmartHo
 
 
 ### Arduino Code Template
+The Arduino code templates provide WiFi and Ethernet connections to the sensor cloud for data collection. 
+
+Developers or users are expected to use the templates to add their own sensors/actuators to the code.
+
+The code templates can be found [here](https://github.com/potatolylc/SmartHomeArduinoTemplates)
 
 
 
