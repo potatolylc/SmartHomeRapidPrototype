@@ -8,6 +8,35 @@ The prototype provides a basic backend server framework for managing smart home 
 
 
 
+### Required Tools
+#### Java Development Kit (JDK) (version 1.7+ required)
 
-#### APIs
+#### Apache Tomcat (version 7.0+ required)
+
+#### Oracle Database Express Edition 11g Release (required)
+
+#### MongoDB (version 2.6)
+
+#### Apache Maven (version 3.2)
+
+#### Git (version 1.9)
+
+
+
+### Environment Configuration
+
+
+
+### APIs
 The open REST API can be referenced [here](https://github.com/potatolylc/SmartHomeRapidPrototype/wiki/Smart-Home-Rapid-Prototype-RESTful-API), and the open WebSocket API can be referenced [here](https://github.com/potatolylc/SmartHomeRapidPrototype/wiki/Smart-Home-Rapid-Prototype-WebSocket-API).
+
+
+
+### Arduino Code Template
+
+
+
+### Code Excerpts of STOMP Client
+#### Android Mobile Application
+
+#### Javascript
