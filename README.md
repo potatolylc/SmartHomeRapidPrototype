@@ -56,25 +56,43 @@ The code templates can be found [here](https://github.com/potatolylc/SmartHomeAr
 In this middleware, STOMP over WebSocket protocol was utilized for push services. Implementations in Android mobile applications and in Web browsers are slightly different. Here shows the server configurations and STOMP client requests in both Android mobile application development and Web development.
 
 + **Server Configurations for WebSocket**
+
 Code for configuring WebSocket in Spring server can be referred to [here](https://github.com/potatolylc/SmartHomeRapidPrototype/blob/master/src/main/java/ioedata/socket/config/SocketConfig.java)
 
-	`@Override`
-	`public void registerStompEndpoints(StompEndpointRegistry registry) {`
-		`registry.addEndpoint("/socket");`
-		`registry.addEndpoint("/webSocket").withSockJS();`
-	`}`
+
+	`@Override
+
+	public void registerStompEndpoints(StompEndpointRegistry registry) {
+
+		registry.addEndpoint("/socket");
+
+		registry.addEndpoint("/webSocket").withSockJS();
+
+	}`
+
 
 + **Android Mobile Application**
+
 Java Library of STOMP client for Android mobile application can be found [here](https://github.com/potatolylc)
+
 	`public void androidStompClientConnection() {`
+	
 		`Map<String, String> headers = new HashMap<String, String>();`
+
 		`Stomp stompClient = new Stomp("ws://[host]:[port_number]/[service_name]/socket", headers, new ListenerWSNetwork() {`
+
 		......
+
 		`});`
+		
 		`androidStompClient.connect();`
+
 		`androidStompClient.subscribe(new Subscription(...), new ListenerSubscription() {`
+
 			......
+
 		`}));`
+
 
 	`}`	
 
