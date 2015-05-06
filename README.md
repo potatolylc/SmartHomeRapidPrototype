@@ -38,13 +38,13 @@ The prototype provides a basic backend server framework for managing smart home 
 
 + Now get the Open-source Rapid Prototype source code from Github.
 
-	git init
+		git init
 
-	git pull https://github.com/potatolylc/SmartHomeRapidPrototype
+		git pull https://github.com/potatolylc/SmartHomeRapidPrototype
 
 + Build project with Maven in the project folder
 
-	mvn clean install
+		mvn clean install
 
 + Start Tomcat server and get the index page, then you got it~
 
