@@ -14,6 +14,7 @@ import ioedata.user.service.UserService;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -106,6 +107,11 @@ public class ActuatorServiceImpl implements ActuatorService {
 		if(actuatorVal == null)
 			throw new ActuatorNotExistException();
 		return actuatorVal;
+	}
+	
+	@Override
+	public List<ActuatorValue> retrieveActuatorList(ObjectId deviceSerialNum) {
+		return this.actuatorRepository.findByDeviceSerialNum(deviceSerialNum);
 	}
 
 	@Override

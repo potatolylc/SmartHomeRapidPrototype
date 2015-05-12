@@ -1,5 +1,7 @@
 package ioedata.actuator.service;
 
+import java.util.List;
+
 import ioedata.actuator.model.ActuatorValue;
 import ioedata.exception.factory.ActuatorDuplicateException;
 import ioedata.exception.factory.ActuatorNotExistException;
@@ -42,6 +44,11 @@ public interface ActuatorService {
 	public ActuatorValue retrieveActuatorInfo(String deviceSerialNum, String actuatorName)
 			throws ActuatorNotExistException,
 			DeviceNotExistException;
+	
+	/*
+	 * Get list of all actuators attached to a device.
+	 */
+	public List<ActuatorValue> retrieveActuatorList(ObjectId deviceSerialNum);
 
 	/*
 	 * Check whether the actuator already exists by using actuator serial
