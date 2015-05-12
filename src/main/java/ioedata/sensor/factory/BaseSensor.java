@@ -27,10 +27,8 @@ public class BaseSensor implements Sensor {
 	
 	@Override
 	public JSONObject subscribeSingleJsonData(String deviceId, String deviceIp, int deviceIpPort, String sensorType){
-		//System.out.println("subscribe single "+deviceIp+" "+deviceIpPort);
 		JSONObject json = null;
 		String urlStr = "http://"+deviceIp+":"+deviceIpPort+BaseSensor.arduinoRoot+deviceId+"/"+sensorType;
-		//System.out.println(urlStr);
 		try {
 			URL url = new URL(urlStr);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -58,10 +56,8 @@ public class BaseSensor implements Sensor {
 	
 	@Override
 	public JSONArray subscribeContinuousData(String deviceId, String deviceIp, int deviceIpPort, String sensorType, int dataCollectionInterval) throws JSONException{
-		//System.out.println("subscribe continuous "+deviceIp+" "+deviceIpPort+" "+dataCollectionInterval);
 		JSONArray jsonArr = new JSONArray();
 		String urlStr = "http://"+deviceIp+":"+deviceIpPort+BaseSensor.arduinoRoot+deviceId+"/"+sensorType;
-		//System.out.println(urlStr);
 		try {
 			URL url = new URL(urlStr);
 			while(dataCollectionInterval != 0){

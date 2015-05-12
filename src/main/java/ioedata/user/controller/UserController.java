@@ -33,7 +33,7 @@ public class UserController {
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
-	public String userRegistration(UserValue userVal) throws JSONException {
+	public void userRegistration(UserValue userVal) throws JSONException {
 		System.out.println("userRegistration: " + userVal);
 		boolean flag = false;
 		String msg = null;
@@ -50,8 +50,6 @@ public class UserController {
 			e.printStackTrace();
 		}
 		System.out.println("userRegistration: " + msg);
-		return new JSONObject().put("result", flag).put("message", msg)
-				.toString();
 	}
 
 	@RequestMapping(value = "/auth", method = RequestMethod.GET)

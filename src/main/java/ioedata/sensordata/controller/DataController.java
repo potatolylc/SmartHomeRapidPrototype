@@ -39,7 +39,7 @@ public class DataController {
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
-	public String collectData(
+	public void collectData(
 			@RequestParam("deviceSerialNum") String deviceSerialNum,
 			@RequestParam("sensorName") String sensorName,
 			@RequestParam("sensorDataValue") double sensorDataValue)
@@ -63,8 +63,6 @@ public class DataController {
 			e.printStackTrace();
 		}
 		System.out.println("collectData: " + msg);
-		return new JSONObject().put("result", flag).put("message", msg)
-				.toString();
 	}
 
 	@RequestMapping(value = "/all", method = RequestMethod.POST)

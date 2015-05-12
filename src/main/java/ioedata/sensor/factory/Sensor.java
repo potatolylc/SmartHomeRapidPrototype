@@ -13,23 +13,23 @@ import org.json.JSONObject;
  */
 public interface Sensor {
 	/*
-	 * Define various sensors
+	 * Define sensor types
 	 */
-	public static final int TYPE_ALL = 0;
-	public static final int TYPE_ANALOG_SOUND = 1;
-	public static final int TYPE_DUST = 2;
-	public static final int TYPE_FLAME = 3;
-	public static final int TYPE_HUMIDITY = 4;
-	public static final int TYPE_LIGHT_BRIGHTNESS = 5;
-	public static final int TYPE_RAINDROP = 6;
-	public static final int TYPE_TEMPERATURE_CELSIUS = 7;
-	public static final int TYPE_TEMPERATURE_FAHRENHEIT = 8;
-	public static final int TYPE_ACCELEROMETER = 9;
-	public static final int TYPE_DIGITAL_TILT = 10;
-	public static final int TYPE_DIGITAL_VIBRATION = 11;
-	public static final int TYPE_INFRARED_MOTION = 12;
-	public static final int TYPE_TOUCH = 13;
-	public static final int TYPE_PRESSURE = 14;
+	public static final int SENSOR_TYPE_ALL = 0;
+	public static final int SENSOR_TYPE_ANALOG_SOUND = 1;
+	public static final int SENSOR_TYPE_DUST = 2;
+	public static final int SENSOR_TYPE_FLAME = 3;
+	public static final int SENSOR_TYPE_HUMIDITY = 4;
+	public static final int SENSOR_TYPE_LIGHT_BRIGHTNESS = 5;
+	public static final int SENSOR_TYPE_RAINDROP = 6;
+	public static final int SENSOR_TYPE_TEMPERATURE_CELSIUS = 7;
+	public static final int SENSOR_TYPE_TEMPERATURE_FAHRENHEIT = 8;
+	public static final int SENSOR_TYPE_ACCELEROMETER = 9;
+	public static final int SENSOR_TYPE_DIGITAL_TILT = 10;
+	public static final int SENSOR_TYPE_DIGITAL_VIBRATION = 11;
+	public static final int SENSOR_TYPE_INFRARED_MOTION = 12;
+	public static final int SENSOR_TYPE_TOUCH = 13;
+	public static final int SENSOR_TYPE_PRESSURE = 14;
 
 	/*
 	 * Define sensor data collection time intervals

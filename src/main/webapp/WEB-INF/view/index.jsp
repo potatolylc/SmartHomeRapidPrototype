@@ -10,7 +10,8 @@
 <script
 	src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script type="text/javascript">
 	/* $(document).ready(function(){
 		alert("my name is liaochen~"); 
@@ -86,10 +87,9 @@
 			<button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
 		</div>
 		<div id="conversationDiv">
-			<label>What is your name?</label>
-			<input type="text" id="longitude" /><br>
-			<input type="text" id="latitude" /><br>
-			<input type="text" id="userSerialNum" />
+			<label>What is your name?</label> <input type="text" id="longitude" /><br>
+			<input type="text" id="latitude" /><br> <input type="text"
+				id="userSerialNum" />
 			<button id="sendName" onclick="sendName();">Send</button>
 			<p id="response"></p>
 		</div>
@@ -171,6 +171,16 @@
 		bedroomLight: <input type="text" name="bedroomLight"><br>
 		bedroomTemperature: <input type="text" name="bedroomTemperature"><br>
 		<input type="submit" value="sensor data collection - all">
+	</form>
+	<br>
+	<br>
+	<form action="actuator" method="post">
+		userName: <input type="text" name="userName"><br>
+		userWifiSsid: <input type="text" name="userWifiSsid"><br>
+		deviceName: <input type="text" name="deviceName"><br>
+		actuatorType: <input type="text" name="actuatorType"><br>
+		actuatorName: <input type="text" name="actuatorName"><br>
+		<input type="submit" value="actuatorRegistration">
 	</form>
 	<br>
 	<br>

@@ -34,7 +34,7 @@ public class SensorController {
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
-	public String sensorRegistration(@RequestParam("userName") String userName,
+	public void sensorRegistration(@RequestParam("userName") String userName,
 			@RequestParam("userWifiSsid") String userWifiSsid,
 			@RequestParam("deviceName") String deviceName,
 			@RequestParam("sensorType") String sensorType,
@@ -42,13 +42,10 @@ public class SensorController {
 		System.out.println("sensorRegistration: " + userName + " " + " "
 				+ userWifiSsid + " " + deviceName + " " + sensorType + " "
 				+ sensorName);
-		ObjectId sensorSerialNum = null;
-		boolean flag = false;
 		String msg = null;
 		try {
-			sensorSerialNum = this.sensorService.registerSensor(userName,
+			this.sensorService.registerSensor(userName,
 					userWifiSsid, deviceName, sensorType, sensorName);
-			flag = true;
 			msg = "Sensor has been successfully registered.";
 		} catch (UserNotExistException e) {
 			msg = "User does not exist.";
@@ -64,8 +61,6 @@ public class SensorController {
 			e.printStackTrace();
 		}
 		System.out.println("sensorRegistration: " + msg);
-		return new JSONObject().put("result", flag).put("message", msg)
-				.put("sensorSerialNum", sensorSerialNum).toString();
 	}
 
 	@RequestMapping(value = "/{sensorSerialNum}", method = RequestMethod.GET)

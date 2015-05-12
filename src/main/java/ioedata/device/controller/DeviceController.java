@@ -45,19 +45,17 @@ public class DeviceController {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
-	public String deviceRegistration(@RequestParam("userName") String userName,
+	public void deviceRegistration(@RequestParam("userName") String userName,
 			@RequestParam("userWifiSsid") String userWifiSsid,
 			@RequestParam("deviceName") String deviceName) throws JSONException {
 		System.out.println("deviceRegistration: " + userName + " "
 				+ userWifiSsid + " " + deviceName);
 		ObjectId deviceSerialNum = null;
-		boolean flag = false;
 		String msg = null;
 		try {
 			deviceSerialNum = this.deviceService.registerDevice(userName,
 					userWifiSsid, deviceName);
 			if (deviceSerialNum != null) {
-				flag = true;
 				msg = "Device has been successfully registerd.";
 			}
 		} catch (DeviceDuplicateException e) {
@@ -71,8 +69,6 @@ public class DeviceController {
 			e.printStackTrace();
 		}
 		System.out.println("deviceRegistration: " + msg);
-		return new JSONObject().put("result", flag).put("message", msg)
-				.put("deviceSerialNum", deviceSerialNum).toString();
 	}
 
 	/*

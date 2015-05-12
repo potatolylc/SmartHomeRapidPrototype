@@ -19,8 +19,7 @@ import org.bson.types.ObjectId;
  */
 public interface SensorService {
 	/*
-	 * Register new sensor to a specific device. If registration succeeded,
-	 * return true value;else, return false.
+	 * Register new sensor to a specific device. 
 	 */
 	public ObjectId registerSensor(String userName, String userWifiSsid,
 			String deviceName, String sensorType, String sensorName)
