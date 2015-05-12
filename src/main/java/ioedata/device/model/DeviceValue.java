@@ -1,5 +1,6 @@
 package ioedata.device.model;
 
+import ioedata.actuator.factory.Actuator;
 import ioedata.actuator.model.ActuatorValue;
 import ioedata.geolocation.model.GeoCoordinate;
 import ioedata.mongodb.repository.DBUtils;
@@ -42,10 +43,14 @@ public class DeviceValue {
 		this.userSerialNum = userSerialNum;
 	}
 
-	public DeviceValue(ObjectId deviceSerialNum, List<SensorValue> sensors) {
+	public DeviceValue(ObjectId deviceSerialNum, List list) {
 		super();
 		this.deviceSerialNum = deviceSerialNum;
-		this.sensors = sensors;
+		Class elementClass = list.get(0).getClass();
+		if(elementClass.equals(SensorValue.class))
+			this.sensors = list;
+		else if(elementClass.equals(ActuatorValue.class))
+			this.actuators = list;
 	}
 
 	public DeviceValue(ObjectId deviceSerialNum, String deviceName,

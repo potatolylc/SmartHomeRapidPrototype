@@ -42,13 +42,28 @@ public class DeviceRepositoryImpl implements
 
 	@Override
 	public WriteResult updateObject(DeviceValue deviceVal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public WriteResult updateDeviceSensors(DeviceValue deviceVal) {
 		Update update = new Update();
 		update.addToSet("sensors", deviceVal.getSensors().get(0));
 		return this.template.upsert(
 				new Query(Criteria.where("_id").is(
 						deviceVal.getDeviceSerialNum())), update,
 				DeviceValue.class);
-
+	}
+	
+	@Override
+	public WriteResult updateDeviceActuators(DeviceValue deviceVal) {
+		Update update = new Update();
+		update.addToSet("actuators", deviceVal.getActuators().get(0));
+		return this.template.upsert(
+				new Query(Criteria.where("_id").is(
+						deviceVal.getDeviceSerialNum())), update,
+				DeviceValue.class);
 	}
 
 	@Override

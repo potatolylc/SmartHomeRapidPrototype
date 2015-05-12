@@ -76,7 +76,7 @@ public class SensorServiceImpl implements SensorService {
 						sensorName, deviceSerialNum);
 		ArrayList<SensorValue> sensors = new ArrayList<SensorValue>();
 		sensors.add(sensorVal);
-		this.deviceService.updateDeviceInfo(new DeviceValue(deviceSerialNum,
+		this.deviceService.updateDeviceSensorsInfo(new DeviceValue(deviceSerialNum,
 				sensors));
 		return sensorSerialNum;
 	}

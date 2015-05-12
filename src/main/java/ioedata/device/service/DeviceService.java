@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
+import ioedata.actuator.model.ActuatorValue;
 import ioedata.device.model.DeviceValue;
 import ioedata.exception.factory.DeviceDuplicateException;
 import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.UserNotExistException;
 import ioedata.geolocation.model.GeoCoordinate;
+import ioedata.sensor.model.SensorValue;
 
 /**
  * This interface provides many methods to deal with end devices,
@@ -64,13 +66,28 @@ public interface DeviceService {
 	public boolean isDeviceExist(int userSerialNum, String deviceName);
 	
 	/*
-	 * Upsert device information
+	 * Upsert device sensor information.
 	 */
-	public void updateDeviceInfo(DeviceValue deviceValue);
+	public void updateDeviceSensorsInfo(DeviceValue deviceValue);
+	
+	/*
+	 * Upsert device actuator information.
+	 */
+	public void updateDeviceActuatorsInfo(DeviceValue deviceValue);
 	
 	/*
 	 * Get device list within a circle geospatial area using a geolocation coordinate
 	 */
 	public List<DeviceValue> retrieveDeviceListWithinCircle(GeoCoordinate geoCoordinate, int distance);
+	
+	/*
+	 * Get sensor list of a device.
+	 */
+	public List<SensorValue> retrieveDeviceSensorList(ObjectId deviceSerialNum) throws DeviceNotExistException;
+	
+	/*
+	 * Get actuator list of a device.
+	 */
+	public List<ActuatorValue> retrieveDeviceActuatorList(ObjectId deviceSerialNum) throws DeviceNotExistException;
 	
 }

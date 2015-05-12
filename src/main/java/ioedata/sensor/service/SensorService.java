@@ -74,8 +74,8 @@ public interface SensorService {
 	public boolean isSensorExist(ObjectId sensorSerialNum);
 
 	/*
-	 * Check whether the sensor serial number already exists, which should be
-	 * unique in the database. If sensor serial number already exists, return
+	 * Check whether the sensor exists by using device serial number and sensor name. 
+	 * If sensor serial number already exists, return
 	 * true; else, return false.
 	 */
 	public boolean isSensorExist(ObjectId deviceSerialNum, String sensorName);

@@ -1,16 +1,18 @@
 package ioedata.device.service;
 
-import java.util.Date;
-import java.util.List;
-
+import ioedata.actuator.model.ActuatorValue;
 import ioedata.device.model.DeviceValue;
 import ioedata.device.repository.DeviceRepository;
 import ioedata.exception.factory.DeviceDuplicateException;
 import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.UserNotExistException;
 import ioedata.geolocation.model.GeoCoordinate;
+import ioedata.sensor.model.SensorValue;
 import ioedata.user.model.UserValue;
 import ioedata.user.service.UserService;
+
+import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -158,14 +160,29 @@ public class DeviceServiceImpl implements DeviceService {
 	}
 
 	@Override
-	public void updateDeviceInfo(DeviceValue deviceValue) {
-		this.deviceRepository.updateObject(deviceValue);
+	public void updateDeviceSensorsInfo(DeviceValue deviceValue) {
+		this.deviceRepository.updateDeviceSensors(deviceValue);
+	}
+	
+	@Override
+	public void updateDeviceActuatorsInfo(DeviceValue deviceValue) {
+		this.deviceRepository.updateDeviceActuators(deviceValue);
 	}
 
 	@Override
 	public List<DeviceValue> retrieveDeviceListWithinCircle(
 			GeoCoordinate geoCoordinate, int distance) {
 		return this.deviceRepository.findByGeoCoordinate(geoCoordinate, distance);
+	}
+
+	@Override
+	public List<SensorValue> retrieveDeviceSensorList(ObjectId deviceSerialNum) throws DeviceNotExistException {
+		return this.retrieveDeviceInfo(deviceSerialNum.toString()).getSensors();
+	}
+
+	@Override
+	public List<ActuatorValue> retrieveDeviceActuatorList(ObjectId deviceSerialNum) throws DeviceNotExistException {
+		return this.retrieveDeviceInfo(deviceSerialNum.toString()).getActuators();
 	}
 
 }

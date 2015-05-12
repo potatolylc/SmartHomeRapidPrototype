@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.WriteResult;
@@ -26,8 +28,8 @@ public class ActuatorRepositoryImpl implements
 
 	@Override
 	public ActuatorValue findOneObject(ObjectId id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.template.findOne(new Query(Criteria.where("_id").is(id)),
+				ActuatorValue.class);
 	}
 
 	@Override
@@ -44,13 +46,20 @@ public class ActuatorRepositoryImpl implements
 	@Override
 	public void deleteObject(ObjectId id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public boolean isObjectExist(ObjectId id) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.template.exists(new Query(Criteria.where("_id").is(id)),
+				ActuatorValue.class);
+	}
+
+	@Override
+	public boolean isObjectExist(ObjectId deviceSerialNum, String actuatorName) {
+		return this.template.exists(new Query(Criteria.where("deviceSerialNum")
+				.is(deviceSerialNum).and("actuatorName").is(actuatorName)),
+				ActuatorValue.class);
 	}
 
 	@Override
@@ -58,4 +67,19 @@ public class ActuatorRepositoryImpl implements
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public ActuatorValue findByActuatorNameAndDeviceSerialNum(
+			String actuatorName, ObjectId deviceSerialNum) {
+		return this.template.findOne(new Query(Criteria.where("actuatorName")
+				.is(actuatorName).and("deviceSerialNum").is(deviceSerialNum)),
+				ActuatorValue.class);
+	}
+
+	@Override
+	public List<ActuatorValue> findByDeviceSerialNum(ObjectId deviceSerialNum) {
+		return this.template.find(new Query(Criteria.where("deviceSerialNum")
+				.is(deviceSerialNum)), ActuatorValue.class);
+	}
+
 }

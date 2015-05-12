@@ -7,6 +7,8 @@ import ioedata.mongodb.repository.BaseRepository;
 import java.io.Serializable;
 import java.util.List;
 
+import com.mongodb.WriteResult;
+
 /**
  * This interface provides abstract methods specifically for device to access MongoDB.
  * It will be implemented by DeviceRepositoryImpl class. 
@@ -30,5 +32,15 @@ public interface DeviceRepository<T, ID extends Serializable> extends BaseReposi
 	 * Overload isObjectExist method to check whether device exists by user serial number and device name.
 	 */
 	public boolean isObjectExist(int userSerialNum, String deviceName);
+
+	/*
+	 * Update sensor information of a device.
+	 */
+	public WriteResult updateDeviceSensors(DeviceValue deviceVal);
+
+	/*
+	 * Update actuator information of a device.
+	 */
+	public WriteResult updateDeviceActuators(DeviceValue deviceVal);
 	
 }
