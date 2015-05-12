@@ -91,8 +91,7 @@ public class SensorServiceImpl implements SensorService {
 	@Override
 	public SensorValue retrieveSensorInfo(String sensorSerialNum)
 			throws SensorNotExistException {
-		SensorValue sensorVal = null;
-		sensorVal = this.sensorRepository.findOneObject(new ObjectId(
+		SensorValue sensorVal  = this.sensorRepository.findOneObject(new ObjectId(
 				sensorSerialNum));
 		if (sensorVal == null)
 			throw new SensorNotExistException();
@@ -110,8 +109,7 @@ public class SensorServiceImpl implements SensorService {
 			throw new DeviceNotExistException();
 
 		// If device exists, get sensor information
-		SensorValue sensorVal = null;
-		sensorVal = this.sensorRepository.findBySensorNameAndDeviceSerialNum(
+		SensorValue sensorVal = this.sensorRepository.findBySensorNameAndDeviceSerialNum(
 				sensorName, deviceSerialNum);
 		if (sensorVal == null)
 			throw new SensorNotExistException();

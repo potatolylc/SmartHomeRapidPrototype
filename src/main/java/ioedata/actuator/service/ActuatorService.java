@@ -1,6 +1,8 @@
 package ioedata.actuator.service;
 
+import ioedata.actuator.model.ActuatorValue;
 import ioedata.exception.factory.ActuatorDuplicateException;
+import ioedata.exception.factory.ActuatorNotExistException;
 import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.UserNotExistException;
 
@@ -27,6 +29,19 @@ public interface ActuatorService {
 	 */
 	public ObjectId retrieveActuatorSerialNumByActuatorNameAndDeviceSerialNum(
 			String actuatorName, ObjectId deviceSerialNum);
+	
+	/*
+	 * Retrieve actuator information by actuator serial number. 
+	 */
+	public ActuatorValue retrieveActuatorInfo(String actuatorSerialNum)
+			throws ActuatorNotExistException;
+	
+	/*
+	 * Retrieve actuator information by device serial number and actuator name. 
+	 */
+	public ActuatorValue retrieveActuatorInfo(String deviceSerialNum, String actuatorName)
+			throws ActuatorNotExistException,
+			DeviceNotExistException;
 
 	/*
 	 * Check whether the actuator already exists by using actuator serial

@@ -6,6 +6,7 @@ import ioedata.exception.factory.SensorNotExistException;
 import ioedata.exception.factory.UserNotExistException;
 import ioedata.sensor.model.SensorValue;
 import ioedata.sensor.service.SensorService;
+import ioedata.utils.StringUtils;
 
 import javax.annotation.Resource;
 
@@ -66,7 +67,7 @@ public class SensorController {
 	@RequestMapping(value = "/{sensorSerialNum}", method = RequestMethod.GET)
 	@ResponseBody
 	public String sensorInformation(
-			@PathVariable("sensorSerialNum") String sensorSerialNum)
+			@PathVariable(StringUtils.SENSOR_SERIAL_NUM) String sensorSerialNum)
 			throws JSONException {
 		System.out.println("sensorInformation: " + sensorSerialNum);
 		SensorValue sensorValRet = null;
@@ -77,14 +78,14 @@ public class SensorController {
 			flag = true;
 		} catch (SensorNotExistException e) {
 			e.printStackTrace();
-			return new JSONObject().put("result", flag).toString();
+			return new JSONObject().put(StringUtils.RESULT, flag).toString();
 		}
-		return new JSONObject().put("result", flag)
-				.put("sensorSerialNum", sensorValRet.getSensorSerialNum())
-				.put("deviceSerialNum", sensorValRet.getDeviceSerialNum())
-				.put("sensorName", sensorValRet.getSensorName())
-				.put("sensorTimestamp", sensorValRet.getSensorTimestamp())
-				.put("sensorTypeNum", sensorValRet.getSensorTypeNum())
+		return new JSONObject().put(StringUtils.RESULT, flag)
+				.put(StringUtils.SENSOR_SERIAL_NUM, sensorValRet.getSensorSerialNum())
+				.put(StringUtils.DEVICE_SERIAL_NUM, sensorValRet.getDeviceSerialNum())
+				.put(StringUtils.SENSOR_NAME, sensorValRet.getSensorName())
+				.put(StringUtils.SENSOR_TIMESTAMP, sensorValRet.getSensorTimestamp())
+				.put(StringUtils.SENSOR_TYPE_NUM, sensorValRet.getSensorTypeNum())
 				.toString();
 	}
 
@@ -108,12 +109,12 @@ public class SensorController {
 			e.printStackTrace();
 			return new JSONObject().put("result", flag).toString();
 		}
-		return new JSONObject().put("result", flag)
-				.put("sensorSerialNum", sensorValRet.getSensorSerialNum())
-				.put("deviceSerialNum", sensorValRet.getDeviceSerialNum())
-				.put("sensorName", sensorValRet.getSensorName())
-				.put("sensorTimestamp", sensorValRet.getSensorTimestamp())
-				.put("sensorTypeNum", sensorValRet.getSensorTypeNum())
+		return new JSONObject().put(StringUtils.RESULT, flag)
+				.put(StringUtils.SENSOR_SERIAL_NUM, sensorValRet.getSensorSerialNum())
+				.put(StringUtils.DEVICE_SERIAL_NUM, sensorValRet.getDeviceSerialNum())
+				.put(StringUtils.SENSOR_NAME, sensorValRet.getSensorName())
+				.put(StringUtils.SENSOR_TIMESTAMP, sensorValRet.getSensorTimestamp())
+				.put(StringUtils.SENSOR_TYPE_NUM, sensorValRet.getSensorTypeNum())
 				.toString();
 	}
 	

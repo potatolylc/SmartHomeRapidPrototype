@@ -6,6 +6,7 @@ import ioedata.actuator.repository.ActuatorRepository;
 import ioedata.device.model.DeviceValue;
 import ioedata.device.service.DeviceService;
 import ioedata.exception.factory.ActuatorDuplicateException;
+import ioedata.exception.factory.ActuatorNotExistException;
 import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.UserNotExistException;
 import ioedata.user.model.UserValue;
@@ -13,7 +14,6 @@ import ioedata.user.service.UserService;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -77,6 +77,35 @@ public class ActuatorServiceImpl implements ActuatorService {
 			String actuatorName, ObjectId deviceSerialNum) {
 		return this.actuatorRepository.findByActuatorNameAndDeviceSerialNum(
 				actuatorName, deviceSerialNum).getActuatorSerialNum();
+	}
+
+	@Override
+	public ActuatorValue retrieveActuatorInfo(String actuatorSerialNum)
+			throws ActuatorNotExistException {
+		ActuatorValue actuatorVal = this.actuatorRepository
+				.findOneObject(new ObjectId(actuatorSerialNum));
+		if (actuatorVal == null)
+			throw new ActuatorNotExistException();
+		return actuatorVal;
+	}
+
+	@Override
+	public ActuatorValue retrieveActuatorInfo(String deviceSerialNum,
+			String actuatorName) throws ActuatorNotExistException,
+			DeviceNotExistException {
+		// Check whether device exists
+		boolean isDeviceExistFlag = this.deviceService
+				.isDeviceExist(deviceSerialNum);
+		if (!isDeviceExistFlag)
+			throw new DeviceNotExistException();
+
+		// If device exists, get actuator information
+		ActuatorValue actuatorVal = this.actuatorRepository
+				.findByActuatorNameAndDeviceSerialNum(actuatorName,
+						new ObjectId(deviceSerialNum));
+		if(actuatorVal == null)
+			throw new ActuatorNotExistException();
+		return actuatorVal;
 	}
 
 	@Override

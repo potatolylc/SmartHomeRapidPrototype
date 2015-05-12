@@ -12,6 +12,7 @@ import ioedata.exception.factory.UserNotExistException;
 import ioedata.geolocation.model.GeoCoordinate;
 import ioedata.sensor.model.SensorValue;
 import ioedata.utils.DateFormatConverter;
+import ioedata.utils.StringUtils;
 
 import javax.annotation.Resource;
 
@@ -76,7 +77,7 @@ public class DeviceController {
 	 */
 	@RequestMapping(value = "/geo", method = RequestMethod.POST)
 	@ResponseBody
-	public String deviceRegistration(@RequestParam("userName") String userName,
+	public void deviceRegistration(@RequestParam("userName") String userName,
 			@RequestParam("userWifiSsid") String userWifiSsid,
 			@RequestParam("deviceName") String deviceName,
 			@RequestParam("longitude") double longitude,
@@ -85,14 +86,12 @@ public class DeviceController {
 				+ userWifiSsid + " " + deviceName + " (" + longitude + ", "
 				+ latitude + ")");
 		ObjectId deviceSerialNum = null;
-		boolean flag = false;
 		String msg = null;
 		try {
 			deviceSerialNum = this.deviceService.registerDevice(userName,
 					userWifiSsid, deviceName, new GeoCoordinate(longitude,
 							latitude));
 			if (deviceSerialNum != null) {
-				flag = true;
 				msg = "Device has been successfully registerd.";
 			}
 		} catch (DeviceDuplicateException e) {
@@ -106,8 +105,6 @@ public class DeviceController {
 			e.printStackTrace();
 		}
 		System.out.println("deviceRegistration: " + msg);
-		return new JSONObject().put("result", flag).put("message", msg)
-				.put("deviceSerialNum", deviceSerialNum).toString();
 	}
 
 	/*
@@ -116,7 +113,7 @@ public class DeviceController {
 	@RequestMapping(value = "/{deviceSerialNum}", method = RequestMethod.GET)
 	@ResponseBody
 	public String deviceInformation(
-			@PathVariable("deviceSerialNum") String deviceSerialNum)
+			@PathVariable(StringUtils.DEVICE_SERIAL_NUM) String deviceSerialNum)
 			throws JSONException {
 		System.out.println("deviceInformation: " + deviceSerialNum);
 		DeviceValue deviceValRet = null;
@@ -127,7 +124,7 @@ public class DeviceController {
 			flag = true;
 		} catch (DeviceNotExistException e) {
 			e.printStackTrace();
-			return new JSONObject().put("result", flag).toString();
+			return new JSONObject().put(StringUtils.RESULT, flag).toString();
 		}
 		
 		List<String> sensorSerialNums = null;
@@ -150,40 +147,40 @@ public class DeviceController {
 		}
 		if (deviceValRet.getGeoCoordinate() == null) {
 			return new JSONObject()
-					.put("result", flag)
-					.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
-					.put("userSerialNum", deviceValRet.getUserSerialNum())
-					.put("deviceName", deviceValRet.getDeviceName())
-					.put("deviceTimestamp",
+					.put(StringUtils.RESULT, flag)
+					.put(StringUtils.DEVICE_SERIAL_NUM, deviceValRet.getDeviceSerialNum())
+					.put(StringUtils.USER_SERIAL_NUM, deviceValRet.getUserSerialNum())
+					.put(StringUtils.DEVICE_NAME, deviceValRet.getDeviceName())
+					.put(StringUtils.DEVICE_TIMESTAMP,
 							DateFormatConverter.getConvert()
 									.englishLocaleToStandard(
 											deviceValRet.getDeviceTimestamp()))
-					.put("sensorSerialNums",
+					.put(StringUtils.SENSOR_SERIAL_NUMS,
 							new JSONArray(sensorSerialNums))
-					.put("actuatorSerialNums",
+					.put(StringUtils.ACTUATOR_SERIAL_NUMS,
 							new JSONArray(actuatorSerialNums))
 					.toString();
 		} else {
 			return new JSONObject()
-					.put("result", flag)
-					.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
-					.put("userSerialNum", deviceValRet.getUserSerialNum())
-					.put("deviceName", deviceValRet.getDeviceName())
-					.put("deviceTimestamp",
+					.put(StringUtils.RESULT, flag)
+					.put(StringUtils.DEVICE_SERIAL_NUM, deviceValRet.getDeviceSerialNum())
+					.put(StringUtils.USER_SERIAL_NUM, deviceValRet.getUserSerialNum())
+					.put(StringUtils.DEVICE_NAME, deviceValRet.getDeviceName())
+					.put(StringUtils.DEVICE_TIMESTAMP,
 							DateFormatConverter.getConvert()
 									.englishLocaleToStandard(
 											deviceValRet.getDeviceTimestamp()))
-					.put("geoCoordinate",
+					.put(StringUtils.GEO_COORDINATE,
 							new JSONObject().put(
-									"longitude",
+									StringUtils.LONGITUDE,
 									deviceValRet.getGeoCoordinate()
 											.getLongitude()).put(
-									"latitude",
+									StringUtils.LATITUDE,
 									deviceValRet.getGeoCoordinate()
 											.getLatitude()))
-					.put("sensorSerialNums",
+					.put(StringUtils.SENSOR_SERIAL_NUMS,
 							new JSONArray(sensorSerialNums))
-					.put("actuatorSerialNums",
+					.put(StringUtils.ACTUATOR_SERIAL_NUMS,
 							new JSONArray(actuatorSerialNums))
 					.toString();
 		}
@@ -207,10 +204,10 @@ public class DeviceController {
 			flag = true;
 		} catch (DeviceNotExistException e) {
 			e.printStackTrace();
-			return new JSONObject().put("result", flag).toString();
+			return new JSONObject().put(StringUtils.RESULT, flag).toString();
 		} catch (UserNotExistException e) {
 			e.printStackTrace();
-			return new JSONObject().put("result", flag).toString();
+			return new JSONObject().put(StringUtils.RESULT, flag).toString();
 		}
 		
 		List<String> sensorSerialNums = null;
@@ -233,40 +230,40 @@ public class DeviceController {
 		}
 		if (deviceValRet.getGeoCoordinate() == null) {
 			return new JSONObject()
-					.put("result", flag)
-					.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
-					.put("userSerialNum", deviceValRet.getUserSerialNum())
-					.put("deviceName", deviceValRet.getDeviceName())
-					.put("deviceTimestamp",
+					.put(StringUtils.RESULT, flag)
+					.put(StringUtils.DEVICE_SERIAL_NUM, deviceValRet.getDeviceSerialNum())
+					.put(StringUtils.USER_SERIAL_NUM, deviceValRet.getUserSerialNum())
+					.put(StringUtils.DEVICE_NAME, deviceValRet.getDeviceName())
+					.put(StringUtils.DEVICE_TIMESTAMP,
 							DateFormatConverter.getConvert()
 									.englishLocaleToStandard(
 											deviceValRet.getDeviceTimestamp()))
-					.put("sensorSerialNums",
+					.put(StringUtils.SENSOR_SERIAL_NUMS,
 							new JSONArray(sensorSerialNums))
-					.put("actuatorSerialNums",
+					.put(StringUtils.ACTUATOR_SERIAL_NUMS,
 							new JSONArray(actuatorSerialNums))
 					.toString();
 		} else {
 			return new JSONObject()
-					.put("result", flag)
-					.put("deviceSerialNum", deviceValRet.getDeviceSerialNum())
-					.put("userSerialNum", deviceValRet.getUserSerialNum())
-					.put("deviceName", deviceValRet.getDeviceName())
-					.put("deviceTimestamp",
+					.put(StringUtils.RESULT, flag)
+					.put(StringUtils.DEVICE_SERIAL_NUM, deviceValRet.getDeviceSerialNum())
+					.put(StringUtils.USER_SERIAL_NUM, deviceValRet.getUserSerialNum())
+					.put(StringUtils.DEVICE_NAME, deviceValRet.getDeviceName())
+					.put(StringUtils.DEVICE_TIMESTAMP,
 							DateFormatConverter.getConvert()
 									.englishLocaleToStandard(
 											deviceValRet.getDeviceTimestamp()))
-					.put("geoCoordinate",
+					.put(StringUtils.GEO_COORDINATE,
 							new JSONObject().put(
-									"longitude",
+									StringUtils.LONGITUDE,
 									deviceValRet.getGeoCoordinate()
 											.getLongitude()).put(
-									"latitude",
+									StringUtils.LATITUDE,
 									deviceValRet.getGeoCoordinate()
 											.getLatitude()))
-					.put("sensorSerialNums",
+					.put(StringUtils.SENSOR_SERIAL_NUMS,
 							new JSONArray(sensorSerialNums))
-					.put("actuatorSerialNums",
+					.put(StringUtils.ACTUATOR_SERIAL_NUMS,
 							new JSONArray(actuatorSerialNums))
 					.toString();
 		}
@@ -277,44 +274,4 @@ public class DeviceController {
 	public String deviceRemove(@PathVariable("deviceSerialNum") String deviceSerialNum) {
 		return new JSONObject().toString();
 	}
-
-	/*
-	 * Get device information by user name, user WiFi SSID and device name.
-	 */
-	/*
-	 * @RequestMapping(value = "", method = RequestMethod.GET)
-	 * 
-	 * @ResponseBody public String deviceInformation(@RequestParam("userName")
-	 * String userName,
-	 * 
-	 * @RequestParam("userWifiSsid") String userWifiSsid,
-	 * 
-	 * @RequestParam("deviceName") String deviceName) throws JSONException {
-	 * System.out.println("deviceInformation: " + userName + " " + userWifiSsid
-	 * + " " + deviceName); DeviceValue deviceValRet = null; boolean flag =
-	 * false; try { deviceValRet =
-	 * this.deviceService.retrieveDeviceInfo(userName, userWifiSsid,
-	 * deviceName); flag = true; } catch (DeviceNotExistException e) {
-	 * e.printStackTrace(); return new JSONObject().put("result",
-	 * flag).toString(); } catch (UserNotExistException e) {
-	 * e.printStackTrace(); return new JSONObject().put("result",
-	 * flag).toString(); } if(deviceValRet.getGeoCoordinate() == null) return
-	 * new JSONObject() .put("result", flag) .put("deviceSerialNum",
-	 * deviceValRet.getDeviceSerialNum()) .put("userSerialNum",
-	 * deviceValRet.getUserSerialNum()) .put("deviceName",
-	 * deviceValRet.getDeviceName()) .put("deviceTimestamp",
-	 * deviceValRet.getDeviceTimestamp()) .put("sensorSerialNums", new
-	 * JSONArray(deviceValRet.getSensors())) .put("actuatorSerialNums", new
-	 * JSONArray(deviceValRet.getActuators())).toString(); else return new
-	 * JSONObject() .put("result", flag) .put("deviceSerialNum",
-	 * deviceValRet.getDeviceSerialNum()) .put("userSerialNum",
-	 * deviceValRet.getUserSerialNum()) .put("deviceName",
-	 * deviceValRet.getDeviceName()) .put("deviceTimestamp",
-	 * deviceValRet.getDeviceTimestamp()) .put("geoCoordinate", new JSONObject()
-	 * .put("longitude", deviceValRet.getGeoCoordinate().getLongitude())
-	 * .put("latitude", deviceValRet.getGeoCoordinate().getLatitude()))
-	 * .put("sensorSerialNums", new JSONArray(deviceValRet.getSensors()))
-	 * .put("actuatorSerialNums", new
-	 * JSONArray(deviceValRet.getActuators())).toString(); }
-	 */
 }

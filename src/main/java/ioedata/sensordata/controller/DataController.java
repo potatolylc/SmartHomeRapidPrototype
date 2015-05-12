@@ -10,6 +10,7 @@ import ioedata.exception.factory.DeviceNotExistException;
 import ioedata.exception.factory.SensorNotExistException;
 import ioedata.sensordata.model.SensorDataValue;
 import ioedata.sensordata.service.DataService;
+import ioedata.utils.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -77,7 +78,7 @@ public class DataController {
 		Enumeration<String> requestParams = request.getParameterNames();
 		while (requestParams.hasMoreElements()) {
 			String requestParam = requestParams.nextElement();
-			if (requestParam.equals("deviceSerialNum"))
+			if (requestParam.equals(StringUtils.DEVICE_SERIAL_NUM))
 				continue;
 			String paramVal = request.getParameter(requestParam);
 			sensorDataPairs.put(requestParam, Double.parseDouble(paramVal));
@@ -92,7 +93,7 @@ public class DataController {
 			msg = e.getMessage();
 			e.printStackTrace();
 		}
-		return new JSONObject().put("result", flag).put("message", msg)
+		return new JSONObject().put(StringUtils.RESULT, flag).put(StringUtils.MESSAGE, msg)
 				.toString();
 	}
 
@@ -113,9 +114,9 @@ public class DataController {
 				for(SensorDataValue data : sensorDataList) {
 					System.out.println(data);
 					JSONObject jsonObj = new JSONObject();
-					jsonObj.put("sensorDataSerialNum", data.getSensorDataSerialNum());
-					jsonObj.put("sensorDataValue", data.getSensorDataValue());
-					jsonObj.put("sensorDataTimestamp", data.getSensorDataTimestampStr());
+					jsonObj.put(StringUtils.SENSOR_DATA_SERIAL_NUM, data.getSensorDataSerialNum());
+					jsonObj.put(StringUtils.SENSOR_DATA_VALUE, data.getSensorDataValue());
+					jsonObj.put(StringUtils.SENSOR_DATA_TIMESTAMP, data.getSensorDataTimestampStr());
 					jsonList.add(jsonObj);
 				}
 			}
@@ -134,7 +135,7 @@ public class DataController {
 			@RequestParam("sensorSerialNum") String sensorSerialNum) throws JSONException {
 		System.out.println("averageData: " + sensorSerialNum);
 		double averageVal = this.dataService.retrieveAverageData(sensorSerialNum);
-		return new JSONObject().put("avarageSensorDataValue", averageVal).toString();
+		return new JSONObject().put(StringUtils.AVERAGE_SENSOR_DATA_VALUE, averageVal).toString();
 	}
 	
 	@RequestMapping(value = "/latest", method = RequestMethod.GET)
@@ -143,7 +144,7 @@ public class DataController {
 			@RequestParam("sensorSerialNum") String sensorSerialNum) throws JSONException {
 		System.out.println("latestData: " + sensorSerialNum);
 		double latestVal = this.dataService.retrieveLatestData(sensorSerialNum);
-		return new JSONObject().put("latestSensorDataValue", latestVal).toString();
+		return new JSONObject().put(StringUtils.LATEST_SENSOR_DATA_VALUE, latestVal).toString();
 	}
 	
 	@RequestMapping(value = "/all/latest", method = RequestMethod.GET)
