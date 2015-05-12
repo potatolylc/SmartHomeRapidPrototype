@@ -118,5 +118,10 @@ public class ActuatorController {
 				.put(StringUtils.ACTUATOR_TIMESTAMP,
 						actuatorValRet.getActuatorTimestamp()).toString();
 	}
+	
+	@RequestMapping(value = "", method = RequestMethod.DELETE)
+	public void actuatorRemove(@PathVariable(StringUtils.ACTUATOR_SERIAL_NUM) String actuatorSerialNum) {
+		System.out.println("actuatorRemove: " + actuatorSerialNum);
+	}
 
 }

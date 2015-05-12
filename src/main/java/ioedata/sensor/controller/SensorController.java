@@ -119,8 +119,7 @@ public class SensorController {
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.DELETE)
-	@ResponseBody
-	public String sensorRemove(@PathVariable("sensorSerialNum") String sensorSerialNum) {
-		return new JSONObject().toString();
+	public void sensorRemove(@PathVariable(StringUtils.SENSOR_SERIAL_NUM) String sensorSerialNum) {
+		System.out.println("sensorRemove: " + sensorSerialNum);
 	}
 }

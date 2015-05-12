@@ -138,16 +138,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{userSerialNum}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public String userRemove(@PathVariable(StringUtils.USER_SERIAL_NUM) int userSerialNum) {
+	public void userRemove(@PathVariable(StringUtils.USER_SERIAL_NUM) int userSerialNum) {
 		System.out.println("userRemove: " + userSerialNum);
-		return new JSONObject().toString();
+
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.DELETE)
-	@ResponseBody
-	public String userRemove(@RequestParam("userName") String userName,
+	public void userRemove(@RequestParam("userName") String userName,
 			@RequestParam("userWifiSsid") String userWifiSsid) {
-		return new JSONObject().toString();
+
 	}
 }
