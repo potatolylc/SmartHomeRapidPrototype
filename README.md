@@ -55,17 +55,17 @@ The open REST API can be referenced [here](https://github.com/potatolylc/SmartHo
 
 
 
+### JavaDoc
+JavaDoc files are available at [here](https://github.com/potatolylc/SmarthomeRapidPrototype/tree/master/doc/ioedata)
+
+
+
 ### Arduino Code Template
 The Arduino code templates provide WiFi and Ethernet connections to the sensor cloud for data collection. 
 
 Developers or users are expected to use the templates to add their own sensors/actuators to the code.
 
 The code templates can be found [here](https://github.com/potatolylc/SmartHomeArduinoTemplates)
-
-
-
-### JavaDoc
-JavaDoc files are available at [here](https://github.com/potatolylc/SmarthomeRapidPrototype/tree/master/doc/ioedata)
 
 
 
