@@ -56,7 +56,7 @@ The open REST API can be referenced [here](https://github.com/potatolylc/SmartHo
 
 
 ### JavaDoc
-JavaDoc files are available at [here](potatolylc.github.io/SmarthomeRapidPrototype/doc/index.html)
+JavaDoc files are available at [here](http://potatolylc.github.io/SmarthomeRapidPrototype/doc/index.html)
 
 
 
