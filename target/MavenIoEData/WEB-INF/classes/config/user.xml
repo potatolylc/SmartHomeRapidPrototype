@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+	<resultMap type="uservo" id="userRM">
+		<result property="userSerialNum" column="user_serial_num" />
+		<result property="userName" column="user_name" />
+		<result property="userWifiSsid" column="user_wifi_ssid" />
+		<result property="userPassword" column="user_password" />
+		<result property="userTimestamp" column="user_timestamp" />
+	</resultMap>
+
+	<!-- insert user information into database -->
+	<insert id="insertUser" parameterType="uservo">
+	    <selectKey keyProperty="userSerialNum" resultType="int" order="BEFORE">
+	        select seq_ioeuser.nextVal from dual
+	    </selectKey>
+	    insert into IOEUSER(user_serial_num, user_name, user_wifi_ssid, user_password, user_timestamp)
+	    values (#{userSerialNum}, #{userName}, #{userWifiSsid}, #{userPassword}, sysdate)
+	</insert>
+	
+	<!-- Get the number user by user serial number. The result could be 0 or 1 -->
+	<select id="getUserCountByUserSerialNum" parameterType="int" resultType="int">
+	    select count(*) from IOEUSER
+	    where user_serial_num = #{userSerialNum}
+	</select>
+		
+	<!-- Get the number of users by user name. -->
+	<select id="getUserCountByUserName" parameterType="string" resultType="int">
+	    select count(*) from IOEUSER 
+	    where user_name = #{userName}
+	</select>
+	
+	<!-- Get the number of users by user name and WiFi SSID. The result could be 0 or 1 -->
+	<select id="getUserCountByUserNameAndSsid" parameterType="uservo" resultType="int">
+		select count(*) from IOEUSER 
+		where user_name = #{userName} and user_wifi_ssid = #{userWifiSsid}
+	</select>
+	
+	<!-- Get the number of users by user name, WiFi SSID and password. The result could be 0 or 1  -->
+	<select id="getUserCountByUserNameAndSsidAndPassword" parameterType="uservo" resultType="int">
+	    select count(*) from IOEUSER
+	    where user_name = #{userName} and user_wifi_ssid = #{userWifiSsid} 
+	    		and user_password = #{userPassword}
+	</select>
+	
+	<!-- Get the user serial number by users by user name and WiFi SSID  -->
+	<select id="getUserSerialNumByUserNameAndSsid" parameterType="uservo" resultType="int">
+	    select user_serial_num from IOEUSER
+	    where user_name = #{userName} and user_wifi_ssid = #{userWifiSsid} 
+	</select>
+	
+	<!-- Get the user serial number by users by user name, WiFi SSID and password  -->
+	<select id="getUserSerialNumByUserNameAndSsidAndPassword" parameterType="uservo" resultType="int">
+	    select user_serial_num from IOEUSER
+	    where user_name = #{userName} and user_wifi_ssid = #{userWifiSsid} 
+	    		and user_password = #{userPassword}
+	</select>
+	
+	<!-- Get user information by user serial number -->
+	<select id="getUserInfoByUserSerialNum" parameterType="int" resultMap="userRM">
+	    select user_serial_num, user_name, user_wifi_ssid, user_timestamp
+	    from IOEUSER
+	    where user_serial_num = #{userSerialNum}
+	</select>
+	
+	<!-- Get user information by user name and WiFi SSID -->
+	<select id="getUserInfoByUserNameAndSsid" parameterType="uservo" resultMap="userRM">
+	    select user_serial_num, user_name, user_wifi_ssid, user_timestamp
+	    from IOEUSER
+	    where user_name = #{userName} and user_wifi_ssid = #{userWifiSsid}
+	</select>
+</mapper>

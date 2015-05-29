@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"mybatis-3-mapper.dtd">
+
+<!-- namespace 를 mabatis 에선 필수로 해야 함!!! -->
+<mapper namespace="data">
+    <!-- ResultMap to match column names and variable names -->
+	<resultMap type="datavo" id="dataRM">
+		<result property="sensorDataSerialNum" column="sensor_data_serial_num" />
+		<result property="sensorDataValue" column="sensor_data_value" />
+		<result property="sensorDataTimestamp" column="sensor_data_timestamp" />
+		<result property="sensorValue.sensorTypeValue.sensorTypeNum" column="sensor_type_num" />
+		<result property="sensorValue.sensorTypeValue.sensorType" column="sensor_type" />
+		<result property="sensorValue.sensorTypeValue.unit" column="unit" />
+		<result property="sensorValue.deviceValue.deviceId" column="device_id" />
+	</resultMap>
+	
+	<!-- Insert new sensor data -->
+	<insert id="insertSensorData" parameterType="datavo" >
+	    <selectKey keyProperty="sensorDataSerialNum" resultType="int" order="BEFORE">
+	        select seq_ioesensordata.nextVal from dual
+	    </selectKey>
+	    insert into IOESENSORDATA(sensor_data_serial_num, sensor_data_value, sensor_data_timestamp, sensor_serial_num)
+		values(#{sensorDataSerialNum}, #{sensorDataValue}, to_date(#{sensorDataTimestampStr}, 'YYYY/MM/DD HH24:MI:SS'), #{sensorValue.sensorSerialNum})
+	</insert>
+	
+	<!-- Get the latest data sorted by time sequence by device ID, despite of a sensor type -->
+	<select id="getLastDataByDeviceIdSortedByTimestamp" parameterType="string" resultMap="dataRM">
+	    select sensor_data_serial_num, sensor_data_value, 
+				sensor_data_timestamp, sensorDataTimestampStr, 
+				sensor_serial_num, sensor_type_num, sensor_type, unit, device_id
+		from(
+				select data.sensor_data_serial_num, data.sensor_data_value, data.sensor_data_timestamp, 
+						to_char(data.sensor_data_timestamp, 'YYYY/MM/DD HH24:MI:SS') as sensorDataTimestampStr, 
+						data.sensor_serial_num, sensor.device_id, sensor.sensor_type_num, sensortype.sensor_type, sensortype.unit
+				from IOESENSORDATA data, IOESENSOR sensor, IOESENSORTYPE sensortype
+				where data.sensor_serial_num=sensor.sensor_serial_num and sensor.sensor_type_num=sensortype.sensor_type_num
+				order by data.sensor_data_timestamp desc
+		)
+		where device_id=#{deviceId} and ROWNUM=1
+	</select>
+	
+	<!-- Get the latest data sorted by time sequence by device ID and a sensor type -->
+	<select id="getLastDataByDeviceIdAndSensorTypeSortedByTimestamp" parameterType="sensorvo" resultMap="dataRM">
+	 	select sensor_data_serial_num, sensor_data_value, 
+				sensor_data_timestamp, sensorDataTimestampStr, 
+				sensor_serial_num, sensor_type_num, sensor_type, unit, device_id
+		from(
+				select data.sensor_data_serial_num, data.sensor_data_value, data.sensor_data_timestamp, 
+						to_char(data.sensor_data_timestamp, 'YYYY/MM/DD HH24:MI:SS') as sensorDataTimestampStr, 
+						data.sensor_serial_num, sensor.device_id, sensor.sensor_type_num, sensortype.sensor_type, sensortype.unit
+				from IOESENSORDATA data, IOESENSOR sensor, IOESENSORTYPE sensortype
+				where data.sensor_serial_num=sensor.sensor_serial_num and sensor.sensor_type_num=sensortype.sensor_type_num
+							and sensor.sensor_type_num=#{sensorTypeValue.sensorTypeNum}
+				order by data.sensor_data_timestamp desc
+		)
+		where device_id=#{deviceValue.deviceId} and ROWNUM=1
+	</select>
+	
+	<!-- Get the greatest data value of a specific sensor type -->
+	<select id="getGreatestDataByDeviceIdAndSensorType" parameterType="sensorvo" resultMap="dataRM">
+	    select sensor_data_value, sensor_serial_num, sensor_type_num, sensor_type, unit, device_id
+		from(
+				select data.sensor_data_value, data.sensor_serial_num, sensor.device_id, 
+							sensor.sensor_type_num, sensortype.sensor_type, sensortype.unit
+				from IOESENSORDATA data, IOESENSOR sensor, IOESENSORTYPE sensortype
+				where data.sensor_serial_num=sensor.sensor_serial_num and sensor.sensor_type_num=sensortype.sensor_type_num
+							and sensor.sensor_type_num=#{sensorTypeValue.sensorTypeNum}
+				order by data.sensor_data_value desc
+		)
+		where device_id=#{deviceValue.deviceId} and ROWNUM=1
+	</select>
+	
+	<!-- Get the least data value of a specific sensor type -->
+	<select id="getLeastDataByDeviceIdAndSensorType" parameterType="sensorvo" resultMap="dataRM">
+	    select sensor_data_value, sensor_serial_num, sensor_type_num, sensor_type, unit, device_id
+		from(
+				select data.sensor_data_value, data.sensor_serial_num, sensor.device_id, 
+							sensor.sensor_type_num, sensortype.sensor_type, sensortype.unit
+				from IOESENSORDATA data, IOESENSOR sensor, IOESENSORTYPE sensortype
+				where data.sensor_serial_num=sensor.sensor_serial_num and sensor.sensor_type_num=sensortype.sensor_type_num
+							and sensor.sensor_type_num=#{sensorTypeValue.sensorTypeNum}
+				order by data.sensor_data_value asc
+		)
+		where device_id=#{deviceValue.deviceId} and ROWNUM=1
+	</select>
+	
+	<select id="getDataListByDeviceIdAndSensorTypeAndDateSortedByTimestamp" parameterType="datavo" resultMap="dataRM">
+	    select sensor_data_serial_num, sensor_data_value, 
+				sensor_data_timestamp, sensorDataTimestampStr, 
+				sensor_serial_num, sensor_type_num, sensor_type, unit, device_id
+		from(
+				select data.sensor_data_serial_num, data.sensor_data_value, data.sensor_data_timestamp, 
+						to_char(data.sensor_data_timestamp, 'YYYY/MM/DD HH24:MI:SS') as sensorDataTimestampStr, 
+						data.sensor_serial_num, sensor.device_id, sensor.sensor_type_num, sensortype.sensor_type, sensortype.unit
+				from IOESENSORDATA data, IOESENSOR sensor, IOESENSORTYPE sensortype
+				where sensor.device_id = #{sensorValue.deviceValue.deviceId}
+						and data.sensor_serial_num=sensor.sensor_serial_num 
+						and sensor.sensor_type_num=sensortype.sensor_type_num
+						and sensor.sensor_type_num=#{sensorValue.sensorTypeValue.sensorTypeNum}
+				order by data.sensor_data_timestamp asc
+				)
+		<choose>
+		    <when test="timeValue.startTime == null and timeValue.endTime == null">
+		        where sensor_data_timestamp between to_date(#{timeValue.startDate}) and to_date(#{timeValue.endDate})+1
+		    </when>
+		    <otherwise>
+		        where sensor_data_timestamp between to_date(#{timeValue.startTime}, 'YYYY-MM-DD HH24:MI:SS') 
+									and to_date(#{timeValue.endTime}, 'YYYY-MM-DD HH24:MI:SS')
+		    </otherwise>
+		</choose>
+	</select>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"mybatis-3-config.dtd">
+<!-- MyBatis  DataSource에 대한 설정 및  SQL 정의 xml 에 대한 매핑-->
+<configuration>
+	<!-- 예시 하나만 적어 놓았고 각자 추가하시길 바랍니다.  -->
+	<typeAliases >
+		<typeAlias type="ioedata.data.model.DataValue" alias="datavo"/>
+		<typeAlias type="ioedata.device.model.DeviceValue" alias="devicevo"/>
+		<typeAlias type="ioedata.sensor.model.SensorValue" alias="sensorvo"/>
+		<typeAlias type="ioedata.sensor.model.SensorTypeValue" alias="sensortypevo"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="config/device.xml"></mapper>
+		<mapper resource="config/data.xml"></mapper>
+		<mapper resource="config/sensor.xml"></mapper>
+	</mappers>
+</configuration>

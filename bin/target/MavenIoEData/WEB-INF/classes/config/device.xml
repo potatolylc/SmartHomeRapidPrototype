@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"mybatis-3-mapper.dtd">
+
+<!-- namespace 를 mabatis 에선 필수로 해야 함!!! -->
+<mapper namespace="device">
+	<resultMap type="devicevo" id="deviceRM">
+		<result property="deviceSerialNum" column="device_serial_num" />
+		<result property="deviceIp" column="device_ip" />
+		<result property="deviceIpPort" column="device_ip_port" />
+		<result property="deviceId" column="device_id" />
+		<result property="devicePassword" column="device_password" />
+	</resultMap>
+
+	<!-- insert device information into database -->
+	<insert id="insertDevice" parameterType="devicevo">
+	    <selectKey keyProperty="deviceSerialNum" resultType="int" order="BEFORE">
+	        select seq_ioeenddevice.nextVal from dual
+	    </selectKey>
+	    insert into IOEENDDEVICE(device_serial_num, device_ip, device_ip_port, device_id, device_password, device_timestamp) 
+	    values(#{deviceSerialNum}, #{deviceIp}, #{deviceIpPort}, #{deviceId}, #{devicePassword}, sysdate)
+	</insert>
+	
+	<!-- Get the number of devices by device ID, IP address and password. The result could be 0 or 1 -->
+	<select id="getDeviceCountByDeviceIdAndDeviceIpAndDevicePassword" parameterType="devicevo" resultType="int">
+		select count(*) from IOEENDDEVICE
+		where device_ip = #{deviceIp} and device_ip_port = #{deviceIpPort} and device_id = #{deviceId} and device_password = #{devicePassword}
+	</select>
+	
+	<!-- Get basic device information exception password using device ID -->
+	<select id="getBasicDeviceInfoByDeviceId" parameterType="string" resultMap="deviceRM">
+		select device_serial_num, device_ip, device_ip_port, device_id
+		from IOEENDDEVICE
+		where device_id = #{deviceId}
+	</select>
+	
+	<!-- Get the number of devices by unique device ID. The result could be 0 or 1 -->
+	<select id="getDeviceCountByDeviceId" parameterType="string" resultType="int">
+	    select count(*) from IOEENDDEVICE
+		where device_id = #{deviceId}
+	</select>
+	
+	<!-- Get the number of devices by unique device IP. The result could be 0 or 1 -->
+	<select id="getDeviceCountByDeviceIp" parameterType="string" resultType="int">
+	    select count(*) from IOEENDDEVICE
+		where device_ip = #{deviceIp}
+	</select>
+</mapper>
