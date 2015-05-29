@@ -64,6 +64,11 @@ The code templates can be found [here](https://github.com/potatolylc/SmartHomeAr
 
 
 
+### JavaDoc
+JavaDoc files are available at [here](https://github.com/potatolylc/SmarthomeRapidPrototype/tree/master/doc/ioedata)
+
+
+
 ### Code Excerpts of STOMP Client
 In this middleware, STOMP over WebSocket protocol was utilized for push services. Implementations in Android mobile applications and in Web browsers are slightly different. Here shows the server configurations and STOMP client requests in both Android mobile application development and Web development.
 
