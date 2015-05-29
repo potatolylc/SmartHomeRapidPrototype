@@ -1,9 +1,12 @@
 package ioedata.utils;
 
+/**
+ * REST URI request Strings
+ * @author ajou
+ *
+ */
 public interface StringUtils {
-	/*
-	 * REST URI request Strings
-	 */
+	
 	// user module
 	public final static String USER_SERIAL_NUM = "userSerialNum";
 	public final static String USER_NAME = "userName";

@@ -5,8 +5,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Define various sensors. Define sensor data collection time intervals. Perform
- * data collection actions for both single collection and continuous collection.
+ * Define various sensors. 
+ * Define sensor data collection time intervals. 
+ * Perform data collection actions for both single collection and continuous collection.
  * 
  * @author ajou
  * 

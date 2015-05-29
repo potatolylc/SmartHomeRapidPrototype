@@ -1,5 +1,11 @@
 package ioedata.actuator.factory;
 
+/**
+ * Create ActuatorManager instances.
+ * Parse actuator type between String and number.
+ * @author ajou
+ *
+ */
 public class ActuatorManager {
 	/*
 	 * Singleton pattern for creating ActuatorManager instances.
@@ -9,8 +15,10 @@ public class ActuatorManager {
 		return actuatorManager;
 	}
 	
-	/*
+	/**
 	 * Parse the actuator type name to get actuator type number.
+	 * @param actuatorType
+	 * @return
 	 */
 	public int getActuatorTypeNum(String actuatorType) {
 		int actuatorTypeNum = -1;
@@ -30,8 +38,10 @@ public class ActuatorManager {
 		return actuatorTypeNum;
 	}
 	
-	/*
+	/**
 	 * Get actuator type by actuator type number.
+	 * @param actuatorTypeNum
+	 * @return
 	 */
 	public String getActuatorType(int actuatorTypeNum) {
 		String actuatorType = null;

@@ -1,5 +1,10 @@
 package ioedata.geolocation.model;
 
+/**
+ * This class creates data transport objects that contain the geographic coordinates' information. 
+ * @author ajou
+ *
+ */
 public class GeoCoordinate {
 	private double longitude;
 	private double latitude;

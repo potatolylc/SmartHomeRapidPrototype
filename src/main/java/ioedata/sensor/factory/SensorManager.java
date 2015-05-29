@@ -1,5 +1,11 @@
 package ioedata.sensor.factory;
 
+/**
+ * Create SensorManager instances.
+ * Parse sensor type between String and number.
+ * @author ajou
+ *
+ */
 public final class SensorManager {
 	/*
 	 * Singleton pattern for creating SensorManager instances.
@@ -11,8 +17,10 @@ public final class SensorManager {
 		return sensorManager;
 	}
 
-	/*
+	/**
 	 * Get sensor instances based on different sensor type numbers.
+	 * @param sensorTypeNum
+	 * @return
 	 */
 	public Sensor getSensor(int sensorTypeNum) {
 		Sensor sensor = null;
@@ -64,8 +72,10 @@ public final class SensorManager {
 		return sensor;
 	}
 	
-	/*
+	/**
 	 * Parse the sensor type name to get sensor type number.
+	 * @param sensorType
+	 * @return
 	 */
 	public int getSensorTypeNum(String sensorType) {
 		int sensorTypeNum = -1;

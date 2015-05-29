@@ -9,6 +9,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * This class creates data transport objects that contain the user's geographical location information. 
+ * @author ajou
+ *
+ */
 @Document(collection = DBUtils.GEO_LOCATION_COLLECTION_NAME)
 public class GeoLocationValue {
 	@Id

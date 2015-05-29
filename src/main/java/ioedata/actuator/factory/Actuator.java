@@ -1,8 +1,13 @@
 package ioedata.actuator.factory;
 
+/**
+ * Define various actuators. 
+ * @author ajou
+ *
+ */
 public interface Actuator {
-	/*
-	 * Define actuator types
+	/**
+	 * Define actuator types.
 	 */
 	public final static int ACTUATOR_TYPE_ALL = 0;
 	public final static int ACTUATOR_TYPE_LIGHT_BRIGHTNESS = 1;

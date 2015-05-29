@@ -8,6 +8,11 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * This class creates data transport objects that contain the user's ambient environment information. 
+ * @author ajou
+ *
+ */
 @Document(collection = DBUtils.WEATHER_COLLECTION_NAME)
 public class WeatherValue {
 	@Id

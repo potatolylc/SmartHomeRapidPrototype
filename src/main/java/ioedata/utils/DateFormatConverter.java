@@ -6,6 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * This class helps to change the date format.
+ * @author ajou
+ *
+ */
 public class DateFormatConverter {
 	private static DateFormatConverter convert = null;
 	private DateFormatConverter() {}
@@ -16,6 +21,11 @@ public class DateFormatConverter {
 		return convert;
 	}
 	
+	/**
+	 * Convert String date format from English locale to standard format.
+	 * @param oldDate
+	 * @return
+	 */
 	public static String englishLocaleToStandard(String oldDate) {
 		String newDate = null;
 		DateFormat englishLocaleFormat = new SimpleDateFormat("EEE MMM DD HH:mm:ss zzz yyyy", Locale.ENGLISH);
@@ -30,6 +40,11 @@ public class DateFormatConverter {
 		return newDate;
 	}
 	
+	/**
+	 * Convert Date date format from English locale to standard format.
+	 * @param oldDate
+	 * @return
+	 */
 	public static String englishLocaleToStandard(Date oldDate) {
 		String newDate = null;
 		DateFormat standardFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss", Locale.KOREA);

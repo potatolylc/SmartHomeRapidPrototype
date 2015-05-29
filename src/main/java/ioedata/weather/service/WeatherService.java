@@ -11,10 +11,14 @@ import ioedata.exception.factory.UserNotExistException;
  *
  */
 public interface WeatherService {
-	/*
+	/**
 	 * Store weather information into database.
 	 * First check whether user exists.
 	 * If user exists, then store data; if not, throw UserNotExistException.
+	 * @param userName
+	 * @param userWifiSsid
+	 * @param dataPairs
+	 * @throws UserNotExistException
 	 */
 	public void logWeatherInfo(String userName, String userWifiSsid, Map<String, Object> dataPairs) throws UserNotExistException;
 }
